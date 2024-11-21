@@ -1,3 +1,7 @@
+import { useRouter } from "next/navigation";
+
+import { auth } from "@/app/firebase/config";
+
 import { Button } from "./ui/button";
 import {
     Card,
@@ -11,19 +15,24 @@ import { useToast } from "@/hooks/use-toast";
 
 function ProductCard({ product, cart, setCart }: { product: Product, cart: Product[], setCart: any }) {
     const { toast } = useToast()
+    const router = useRouter();
 
     function handleAddCart(): void {
-        if (cart.some((cartProduct: Product) => cartProduct.id === product.id)) {
-            product.amount += 1;
-            setCart([...cart]);
-            toast({
-                title: `Increased ${product.name} to ${product.amount}`
-            });
+        if (auth.currentUser) {
+            if (cart.some((cartProduct: Product) => cartProduct.id === product.id)) {
+                product.amount += 1;
+                setCart([...cart]);
+                toast({
+                    title: `Increased ${product.name} to ${product.amount}`
+                });
+            } else {
+                setCart((cart: Product[]) => [...cart, product]);
+                toast({
+                    title: `Added ${product.name} to cart!`
+                });
+            }
         } else {
-            setCart((cart: Product[]) => [...cart, product]);
-            toast({
-                title: `Added ${product.name} to cart!`
-            });
+            router.push("/login");
         }
     }
 
