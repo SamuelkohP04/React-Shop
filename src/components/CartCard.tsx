@@ -31,12 +31,12 @@ function CartCard({ product, setCart }: { product : Product, setCart: any }) {
                 <img className="rounded" src="https://mooncatcrystals.com/cdn/shop/articles/Aura-and-Other-Treated-Crystals-Why-I-Love-Them-Now-Mooncat-Crystals-759.jpg?v=1727646557&width=2048" />
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
-                <div>
+                <div className="flex flex-col items-start">
                     <CardTitle>{product.name}</CardTitle>
                     <CardDescription>{product.desc}</CardDescription>
                 </div>
                 <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-8">
+                    <div className="flex items-center gap-8 max-md:gap-4">
                         <Button className="w-8 h-8 bg-white rounded-full" onClick={handleAdd}>
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
                         </Button>

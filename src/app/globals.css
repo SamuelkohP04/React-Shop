@@ -67,6 +67,6 @@ body {
         @apply border-border;
     }
     body {
-        @apply min-h-screen grid place-items-center;
+        @apply min-h-screen grid place-items-center bg-neutral-200;
     }
 }

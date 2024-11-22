@@ -37,7 +37,7 @@ function ProductCard({ product, cart, setCart }: { product: Product, cart: Produ
     }
 
     return (
-        <Card className="w-1/4 flex flex-col bg-slate-100 border-0 rounded">
+        <Card className="w-1/4 flex flex-col bg-slate-100 border-0 rounded max-lg:w-full">
             <CardHeader>
                 <img className="rounded" src="https://mooncatcrystals.com/cdn/shop/articles/Aura-and-Other-Treated-Crystals-Why-I-Love-Them-Now-Mooncat-Crystals-759.jpg?v=1727646557&width=2048" />
             </CardHeader>

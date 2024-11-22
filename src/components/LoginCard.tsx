@@ -50,7 +50,7 @@ function LoginCard() {
     }
 
     return (
-        <Card className="w-2/5 flex flex-col bg-slate-100 border-0 rounded p-4 gap-4">
+        <Card className="w-2/5 flex flex-col bg-slate-100 border-0 rounded p-4 gap-4 max-lg:w-5/6">
             <CardHeader>
                 <h1 className="text-4xl font-bold">LOGO</h1>
                 <h1 className="text-2xl font-semibold">{isLogin ? "Login" : "Register"}</h1>

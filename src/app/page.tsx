@@ -32,12 +32,11 @@ function Home() {
                             <SelectValue placeholder="Price" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="light">Light</SelectItem>
-                            <SelectItem value="dark">Dark</SelectItem>
-                            <SelectItem value="system">System</SelectItem>
+                            <SelectItem value="light">Least Expensive</SelectItem>
+                            <SelectItem value="dark">Most Expensive</SelectItem>
                         </SelectContent>
                     </Select>
-                    <div className="flex gap-8">
+                    <div className="flex gap-8 max-lg:flex-col max-lg:pb-8">
                         {products.map((product: any) => {
                             return (
                                 <ProductCard key={product.id} product={product} cart={cart} setCart={setCart} />
