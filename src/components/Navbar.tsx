@@ -1,7 +1,9 @@
 import { useRouter } from "next/navigation";
 
 import { auth } from "@/app/firebase/config";
+import { db } from "@/app/firebase/config";
 import { signOut } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore"; 
 
 import { Button } from "./ui/button";
 import {
@@ -23,6 +25,14 @@ function Navbar({ cart, setCart }: { cart: Product[], setCart: any }) {
                 router.push("/login")
             });
     }
+
+    async function handleCheckout(): Promise<void> {
+        if (auth.currentUser) {
+            await setDoc(doc(db, "users", auth.currentUser.uid), {
+                cart: cart
+            });
+        }
+    }
     
     if (auth.currentUser) {
         return (
@@ -37,13 +47,12 @@ function Navbar({ cart, setCart }: { cart: Product[], setCart: any }) {
                             </SheetTrigger>
                             <Button className="font-semibold" variant="link" onClick={handleLogout}>Logout</Button>
                         </div>
-                        <SheetContent className="bg-neutral-200 overflow-scroll">
+                        <SheetContent className="flex flex-col justify-between bg-neutral-200 overflow-scroll pb-0">
                             <SheetHeader className="flex flex-col gap-4">
                                 <div>
                                     <SheetTitle className="text-2xl">Cart</SheetTitle>
                                     <SheetDescription>
-                                        This action cannot be undone. This will permanently delete your account
-                                        and remove your data from our servers.
+                                        You have {cart.length} {cart.length === 1 ? "item" : "items"} in your cart
                                     </SheetDescription>
                                 </div>
                                 {cart.map((product: Product) => {
@@ -52,6 +61,9 @@ function Navbar({ cart, setCart }: { cart: Product[], setCart: any }) {
                                     );
                                 })}
                             </SheetHeader>
+                            <div className="sticky bottom-0 bg-neutral-200 py-4">
+                                <Button className="w-full bg-white text-black hover:bg-neutral-300" onClick={handleCheckout}>Checkout</Button>
+                            </div>
                         </SheetContent>
                     </Sheet>
                 </div>

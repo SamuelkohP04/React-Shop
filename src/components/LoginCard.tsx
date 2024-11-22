@@ -66,7 +66,7 @@ function LoginCard() {
                 </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
-                <Button className="w-full bg-white text-black hover:bg-neutral-200" onClick={handleClick}>{isLogin ? "Login" : "Register"}</Button>
+                <Button className="w-full bg-white text-black hover:bg-neutral-300" onClick={handleClick}>{isLogin ? "Login" : "Register"}</Button>
                 <Button variant="link" onClick={() => setIsLogin(!isLogin)}>{isLogin ? "Don't have an account?" : "Already have an account?"}</Button>
             </CardFooter>
         </Card>
