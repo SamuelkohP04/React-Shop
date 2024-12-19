@@ -29,7 +29,7 @@ import {
 import CartCard from "./CartCard";
 
 function Navbar() {
-    const [cart, setCart] = useState<object>(JSON.parse(localStorage.getItem("cart")))
+    const [cart, setCart] = useState<object>(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : {})
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const router = useRouter();
     let products: Product[] = [{ id: "1", cat: "Crystal", name: "crystal1", desc: "this is a crystal", image: "/crystal1.png", images: [], price: 10.2, amount: 1 }, { id: "2", cat: "Statue", name: "PiXiu 貔貅", desc: "Golden Lion Statue", image: "/lion2.png", images: [], price: 10.2, amount: 1 }, { id: "3", cat: "Incense", name: "Incense Burner (倒流香)", desc: "Incense Burner", image: "/incense2.png", images: [], price: 10.2, amount: 1 }, { id: "4", cat: "Incense", name: "Rose Wood Incense Burner", desc: "Rose Wood Incense Burner", image: "/incense3.png", images: [], price: 10.2, amount: 1 }]
