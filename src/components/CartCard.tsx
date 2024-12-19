@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import Image from "next/image";
+
+import { AspectRatio } from "./ui/aspect-ratio";
 import { Button } from "./ui/button";
 import {
     Card,
@@ -28,7 +31,9 @@ function CartCard({ product, setCart }: { product : Product, setCart: any }) {
     return (
         <Card className="w-full flex flex-col bg-neutral-100 border-0 rounded">
             <CardHeader>
-                <img className="rounded" src="https://mooncatcrystals.com/cdn/shop/articles/Aura-and-Other-Treated-Crystals-Why-I-Love-Them-Now-Mooncat-Crystals-759.jpg?v=1727646557&width=2048" />
+                <AspectRatio ratio={16 / 9}>
+                    <Image className="rounded object-cover" src={product.image} alt="" fill />
+                </AspectRatio>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 <div className="flex flex-col items-start">
