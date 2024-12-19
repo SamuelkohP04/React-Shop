@@ -151,13 +151,6 @@ function Navbar() {
                                     and remove your data from our servers.
                                 </SheetDescription>
                             </div>
-                            {Object.keys(cart).map((key: string) => {
-                                const product: Product = products.filter((product: Product) => product.id === key)[0];
-
-                                return (
-                                    <CartCard key={product.id} product={product} setCart={setCart} />
-                                );
-                            })}
                         </SheetHeader>
                     </SheetContent>
                 </Sheet>
