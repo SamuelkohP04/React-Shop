@@ -3,13 +3,13 @@
 
 import { Metadata } from "next";
 import CTA from "@/app/(site)/Cta";
-import FAQ from "@/app/(site)/Faq";
+//import FAQ from "@/app/(site)/Faq";
 import FeaturedTime from "@/app/(site)/FeaturedTime";
 import Footer from "@/app/(site)/Footer";
 import HeroSection from "@/app/(site)/Hero";
 import MakerIntro from "@/app/(site)/MakerIntro";
 import Navbar from "@/app/(site)/Navbar";
-import PricingSection from "@/app/(site)/pricing";
+//import PricingSection from "@/app/(site)/pricing";
 import TestimonialsPage from "@/app/(site)/Testimonials";
 import FadeInSection from "@/components/FadeInSection";
 
