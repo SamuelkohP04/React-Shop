@@ -39,7 +39,7 @@ export default function MembershipPage() {
           Welcome to our membership page! Here you can find information about
           our membership plans.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-8 place-items-center max-w-4xl px-8 mx-auto">
           {membershipPlans.map((plan, index) => (
             <div key={index} className="flex flex-col items-center">
               <div
