@@ -56,10 +56,10 @@ export default function Navbar() {
             Features
           </Link>
           <Link
-            href="#wall-of-love"
+            href="#membership"
             className="text-base text-white/90 transition hover:text-white"
           >
-            Enterprise
+            Membership
           </Link>
         </div>
 
@@ -132,11 +132,11 @@ export default function Navbar() {
             Features
           </Link>
           <Link
-            href="#wall-of-love"
+            href="#membership"
             className="text-base text-white/90 transition hover:text-white"
             onClick={toggleMenu}
           >
-            Enterprise
+            Membership
           </Link>
           <a
             href="#login"
