@@ -56,7 +56,7 @@ export default function Navbar() {
             Features
           </Link>
           <Link
-            href="#membership"
+            href="/membership"
             className="text-base text-white/90 transition hover:text-white"
           >
             Membership
@@ -132,7 +132,7 @@ export default function Navbar() {
             Features
           </Link>
           <Link
-            href="#membership"
+            href="/membership"
             className="text-base text-white/90 transition hover:text-white"
             onClick={toggleMenu}
           >
