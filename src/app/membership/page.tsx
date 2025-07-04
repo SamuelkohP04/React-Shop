@@ -7,19 +7,19 @@ export default function MembershipPage() {
     {
       title: "Basic Free Plan",
       price: "$0",
-      description:
-        "24/7 Telegram & Website appointment booking access \n" +
-        "Limited notifications from Telegram bot",
+      description:[
+        "24/7 Telegram & Website appointment booking access" ,
+        "Limited notifications from Telegram bot"]
       //image: "/LandingPage/BasicPlan.jpg", // Replace with actual image path
     },
     {
       title: "Enlightenment Membership Plan",
       price: "$10",
       description:
-        "Birthday discounts: having a 10% discount on a purchase during birthday month\n" +
-        "Discounted bundle of 10% off when booking a tarot card reading + energy crystal purchase\n" +
-        "24/7 Telegram & Website appointment booking access\n" +
-        "Birthday wishes & other unlimited notifications from Telegram bot",
+        ["Birthday discounts: having a 10% discount on a purchase during birthday month" ,
+        "Discounted bundle of 10% off when booking a tarot card reading + energy crystal purchase" ,
+        "24/7 Telegram & Website appointment booking access" ,
+        "Birthday wishes & other unlimited notifications from Telegram bot"],
       //image: "/LandingPage/PremiumPlan.jpg", // Replace with actual image path
     },
   ];
@@ -50,11 +50,15 @@ export default function MembershipPage() {
                 <p className="mt-4 text-black text-xl font-bold ">
                   {plan.title}
                 </p>
-                <p className="mt-2 text-black text-3xl font-bold">
+                <p className="mt-2 text-black text-5xl font-bold">
                   {plan.price}
                 </p>
-                <p className="mt-2 text-black text-sm">{plan.description}</p>
-                
+                <ul className="mt-2 text-black text-sm space-y-4">{plan.description.map((point, index) => (
+                  <li key={index} className="block text-black list-disc ">
+                    {point}
+                  </li>
+                ))}</ul>
+
               </div>
             </div>
           ))}
