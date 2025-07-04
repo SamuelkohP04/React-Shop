@@ -41,13 +41,13 @@ export default function MembershipPage() {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {membershipPlans.map((plan, index) => (
-            <div key={index} className="flex flex-col items-center text-center">
+            <div key={index} className="flex flex-col items-center">
               <div
                 className="w-full aspect-square bg-gray-300 rounded-lg overflow-hidden 
-                flex items-center justify-center text-white font-semibold text-lg 
+                flex flex-col items-center justify-center text-white font-semibold text-lg 
                 transform transition-transform duration-300 hover:scale-105"
               >
-                <p className="mt-4 text-black text-base font-bold">
+                <p className="mt-4 text-black text-base font-bold ">
                   {plan.title}
                 </p>
                 <p className="mt-2 text-black text-sm">{plan.description}</p>
