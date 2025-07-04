@@ -39,7 +39,25 @@ export default function MembershipPage() {
           Welcome to our membership page! Here you can find information about our membership plans.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {/* Add your membership cards here */}
+          {membershipPlans.map((plan, index) => (
+            <div key={index} className="flex flex-col items-center text-center">
+              <div
+                className="w-full aspect-square bg-gray-300 rounded-lg overflow-hidden 
+                flex items-center justify-center text-white font-semibold text-lg 
+                transform transition-transform duration-300 hover:scale-105"
+                style={{
+                  //backgroundImage: `url('${plan.image}')`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+
+              </div>
+              <p className="mt-4 text-white text-base font-medium">
+                {plan.title}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Add your membership content here */}
