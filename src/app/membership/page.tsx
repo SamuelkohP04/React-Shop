@@ -1,26 +1,27 @@
 import Navbar from "@/app/(site)/Navbar";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 export default function MembershipPage() {
-
   const membershipPlans = [
     {
       title: "Basic Free Plan",
       price: "$0/month",
-      description: "24/7 Telegram & Website appointment booking access \n"+
-      "Limited notifications from Telegram bot",
+      description:
+        "24/7 Telegram & Website appointment booking access \n" +
+        "Limited notifications from Telegram bot",
       //image: "/LandingPage/BasicPlan.jpg", // Replace with actual image path
     },
     {
       title: "Enlightenment Membership Plan",
       price: "$10/month",
-      description: "Birthday discounts: having a 10% discount on a purchase during birthday month\n" + 
-      "Discounted bundle of 10% off when booking a tarot card reading + energy crystal purchase\n" +
-      "24/7 Telegram & Website appointment booking access\n" +
-      "Birthday wishes & other unlimited notifications from Telegram bot",
+      description:
+        "Birthday discounts: having a 10% discount on a purchase during birthday month\n" +
+        "Discounted bundle of 10% off when booking a tarot card reading + energy crystal purchase\n" +
+        "24/7 Telegram & Website appointment booking access\n" +
+        "Birthday wishes & other unlimited notifications from Telegram bot",
       //image: "/LandingPage/PremiumPlan.jpg", // Replace with actual image path
-    }
+    },
   ];
   return (
     <div className="relative bg-black/20">
@@ -31,12 +32,12 @@ export default function MembershipPage() {
         className="fixed top-0 left-0 w-full h-full object-cover z-[-1]"
       />
 
-
       <div>
         <Navbar />
         <h1 className="text-4xl font-bold text-gray-900 mb-8">Membership</h1>
         <p className="text-lg text-gray-600">
-          Welcome to our membership page! Here you can find information about our membership plans.
+          Welcome to our membership page! Here you can find information about
+          our membership plans.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {membershipPlans.map((plan, index) => (
@@ -45,17 +46,15 @@ export default function MembershipPage() {
                 className="w-full aspect-square bg-gray-300 rounded-lg overflow-hidden 
                 flex items-center justify-center text-white font-semibold text-lg 
                 transform transition-transform duration-300 hover:scale-105"
-                style={{
-                  //backgroundImage: `url('${plan.image}')`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
               >
-
+                <p className="mt-4 text-black text-base font-bold">
+                  {plan.title}
+                </p>
+                <p className="mt-2 text-black text-sm">{plan.description}</p>
+                <p className="mt-2 text-black text-sm font-medium">
+                  {plan.price}
+                </p>
               </div>
-              <p className="mt-4 text-white text-base font-medium">
-                {plan.title}
-              </p>
             </div>
           ))}
         </div>
