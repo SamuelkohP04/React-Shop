@@ -1,6 +1,3 @@
-
-
-
 import { Metadata } from "next";
 import CTA from "@/app/(site)/Cta";
 //import FAQ from "@/app/(site)/Faq";
