@@ -6,7 +6,7 @@ export default function MembershipPage() {
   const membershipPlans = [
     {
       title: "Basic Free Plan",
-      price: "$0/month",
+      price: "$0",
       description:
         "24/7 Telegram & Website appointment booking access \n" +
         "Limited notifications from Telegram bot",
@@ -14,7 +14,7 @@ export default function MembershipPage() {
     },
     {
       title: "Enlightenment Membership Plan",
-      price: "$10/month",
+      price: "$10",
       description:
         "Birthday discounts: having a 10% discount on a purchase during birthday month\n" +
         "Discounted bundle of 10% off when booking a tarot card reading + energy crystal purchase\n" +
@@ -44,16 +44,17 @@ export default function MembershipPage() {
             <div key={index} className="flex flex-col items-center">
               <div
                 className="w-full aspect-square bg-gray-300 rounded-lg overflow-hidden 
-                flex flex-col items-center justify-center text-white font-semibold text-lg 
+                flex flex-col p-8  text-white font-semibold text-lg 
                 transform transition-transform duration-300 hover:scale-105"
               >
-                <p className="mt-4 text-black text-base font-bold ">
+                <p className="mt-4 text-black text-xl font-bold ">
                   {plan.title}
                 </p>
-                <p className="mt-2 text-black text-sm">{plan.description}</p>
-                <p className="mt-2 text-black text-sm font-medium">
+                <p className="mt-2 text-black text-3xl font-bold">
                   {plan.price}
                 </p>
+                <p className="mt-2 text-black text-sm">{plan.description}</p>
+                
               </div>
             </div>
           ))}
