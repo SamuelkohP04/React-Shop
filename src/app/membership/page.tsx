@@ -3,6 +3,25 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 export default function MembershipPage() {
+
+  const membershipPlans = [
+    {
+      title: "Basic Free Plan",
+      price: "$0/month",
+      description: "24/7 Telegram & Website appointment booking access \n"+
+      "Limited notifications from Telegram bot",
+      //image: "/LandingPage/BasicPlan.jpg", // Replace with actual image path
+    },
+    {
+      title: "Enlightenment Membership Plan",
+      price: "$10/month",
+      description: "Birthday discounts: having a 10% discount on a purchase during birthday month\n" + 
+      "Discounted bundle of 10% off when booking a tarot card reading + energy crystal purchase\n" +
+      "24/7 Telegram & Website appointment booking access\n" +
+      "Birthday wishes & other unlimited notifications from Telegram bot",
+      //image: "/LandingPage/PremiumPlan.jpg", // Replace with actual image path
+    }
+  ];
   return (
     <div className="relative bg-black/20">
       {/* Background GIF */}
@@ -19,19 +38,10 @@ export default function MembershipPage() {
         <p className="text-lg text-gray-600">
           Welcome to our membership page! Here you can find information about our membership plans.
         </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {/* Add your membership cards here */}
+        </div>
 
-      <Card style={{ width: '18rem' }}>
-      {/*<Card.Img variant="top" src="holder.js/100px180" />*/}
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
-    </Card>
-  
         {/* Add your membership content here */}
       </div>
     </div>
