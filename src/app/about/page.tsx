@@ -129,7 +129,12 @@ export default function AboutPage() {
 
   </div>
 
-  <DeveloperCard developer={developers[0]} />
+  <DeveloperCard developer={{
+    imgSrc: "/LandingPage/FakePerson1.jpeg",
+    title: "Samuel Koh",
+    name: "Samuel Koh",
+    description: "Lead Software Engineer"
+  }} />
     </div>
   );
 }
