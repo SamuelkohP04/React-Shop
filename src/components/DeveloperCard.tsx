@@ -5,15 +5,13 @@
  */
 import { Button } from "@/components/ui/button"
 
-interface Developer {
-  imgSrc: string;
-  title: string;
-  name: string;
-  description: string;
-} 
-
-export default function DeveloperCard(developer: Developer) {
-  const { imgSrc, title, name, description } = developer;
+interface DeveloperCardProps {
+  imgSrc?: string;    // Optional
+  title?: string;     // Optional  
+  name?: string;      // Optional
+  description?: string; // Optional
+}
+export default function DeveloperCard({ imgSrc, title, name, description }: DeveloperCardProps) {
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl dark:bg-gray-950">

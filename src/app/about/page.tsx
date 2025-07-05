@@ -6,13 +6,39 @@ import { Developer } from "../classes/Developer";
 
 export default function AboutPage() {
   const developers = [
-    new Developer("Samuel Koh", "Lead Software Engineer", "/LandingPage/FakePerson1.jpeg"),
-    new Developer("Koh Chin Teck", "Front-end Web Developer", "/LandingPage/FakePerson2.jpeg"),
-    new Developer("Ong Xin Yin", "Backend Engineer - Telegram Bot Services", "/LandingPage/FakePerson3.jpeg"),
-    new Developer("Xu Jia Wei", "Backend Engineer - Telegram Bot Services", "/LandingPage/FakePerson1.jpeg"),
-    new Developer("John Wong", "Software Engineer", "/LandingPage/FakePerson1.jpeg"),
-    new Developer("Cheryl Neo", "User Interface/User Experience Designer", "/LandingPage/FakePerson1.jpeg"),
-    new Developer("Ang Wei Liang", "Software Engineer", "/LandingPage/FakePerson1.jpeg"),
+    {
+      title: "Samuel Koh",
+      image: "/LandingPage/FakePerson1.jpeg",
+    },
+    {
+      title: "Koh Chin Teck",
+      image: "/LandingPage/FakePerson2.jpeg",
+    },
+    {
+      title: "Ong Xin Yin",
+      image: "/LandingPage/FakePerson3.jpeg",
+    },
+    {
+      title: "Ong Xin Yin",
+      image: "/LandingPage/FakePerson1.jpeg",
+    },
+
+    {
+      title: "Ong Xin Yin",
+      image: "/LandingPage/FakePerson1.jpeg",
+    },
+
+    {
+      title: "Ong Xin Yin",
+      image: "/LandingPage/FakePerson1.jpeg",
+    }
+    // new Developer("Samuel Koh", "Lead Software Engineer", "/LandingPage/FakePerson1.jpeg"),
+    // new Developer("Koh Chin Teck", "Front-end Web Developer", "/LandingPage/FakePerson2.jpeg"),
+    // new Developer("Ong Xin Yin", "Backend Engineer - Telegram Bot Services", "/LandingPage/FakePerson3.jpeg"),
+    // new Developer("Xu Jia Wei", "Backend Engineer - Telegram Bot Services", "/LandingPage/FakePerson1.jpeg"),
+    // new Developer("John Wong", "Software Engineer", "/LandingPage/FakePerson1.jpeg"),
+    // new Developer("Cheryl Neo", "User Interface/User Experience Designer", "/LandingPage/FakePerson1.jpeg"),
+    // new Developer("Ang Wei Liang", "Software Engineer", "/LandingPage/FakePerson1.jpeg"),
   ];
 
   return (
@@ -103,13 +129,7 @@ export default function AboutPage() {
 
   </div>
 
-  <DeveloperCard 
-  imgSrc="/LandingPage/FakePerson1.jpeg"
-  title="Senior React Developer"
-  name="Jane Smith" 
-  description="Passionate about creating intuitive user experiences with modern web technologies."
-/>
-
+  <DeveloperCard developer={developers[0]} />
     </div>
   );
 }
