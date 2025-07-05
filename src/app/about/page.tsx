@@ -123,7 +123,12 @@ export default function AboutPage() {
 
   </div>
 
-  <DeveloperCard></DeveloperCard>
+  <DeveloperCard 
+  imgSrc="/LandingPage/FakePerson1.jpeg"
+  title="Senior React Developer"
+  name="Jane Smith" 
+  description="Passionate about creating intuitive user experiences with modern web technologies."
+/>
 
     </div>
   );
