@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     await db.collection("users").doc(uid).set({
       fullname,
       username,
-      dob,
+      dob: dob ? new Date(dob) : null,
       phone,
       email,
       createdAt: new Date(),
