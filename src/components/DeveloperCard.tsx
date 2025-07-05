@@ -5,7 +5,7 @@
  */
 import { Button } from "@/components/ui/button"
 
-export default function Component() {
+export default function DeveloperCard() {
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl dark:bg-gray-950">
