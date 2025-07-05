@@ -13,12 +13,17 @@ export default function AboutPage() {
 
       <Navbar />
 
-      <h1 className="text-4xl font-bold text-white m-8 pt-10 mx-auto">
-        About Us
-      </h1>
-      <p className="text-base sm:text-lg text-white m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl mx-auto">
+      {/* <h1 className="text-4xl font-bold text-white m-8 pt-10 mx-auto">
+        About Awareness Living
+      </h1> */}
+
+      <h1
+        className="text-4xl font-bold text-white pt-10
+      m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl 
+      mx-auto"
+      >
         Hello, I'm Benjamin Koh!
-      </p>
+      </h1>
 
       <div className="flex flex-row items-center justify-center min-h-screen m-20">
         <div className="w-14 flex-1">
