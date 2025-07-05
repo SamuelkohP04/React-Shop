@@ -15,6 +15,20 @@ export default function AboutPage() {
       title: "Ong Xin Yin",
       image: "/LandingPage/FakePerson3.jpeg",
     },
+    {
+      title: "Ong Xin Yin",
+      image: "/LandingPage/FakePerson1.jpeg",
+    },
+
+    {
+      title: "Ong Xin Yin",
+      image: "/LandingPage/FakePerson1.jpeg",
+    },
+
+    {
+      title: "Ong Xin Yin",
+      image: "/LandingPage/FakePerson1.jpeg",
+    },
   ];
 
 
