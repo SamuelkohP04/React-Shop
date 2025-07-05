@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../(site)/Navbar";
+import { Card } from "@/components/ui/card";
 
 export default function AboutPage() {
   const developers = [
@@ -120,7 +121,18 @@ export default function AboutPage() {
       </div>
 
   </div>
-      
+
+  <Card>
+    <h2 className="text-lg font-bold">Our Services</h2>
+    <p className="mt-2">
+      We offer a range of services to help you on your spiritual journey,
+      including personalized Tarot readings, energy healing sessions, and
+      workshops.
+
+      <br />
+      <br />
+    </p>
+  </Card>
 
     </div>
   );
