@@ -1,0 +1,28 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getFirestore } from "firebase-admin/firestore";
+import { adminAuth } from "@/lib/firebaseAdmin";
+
+export async function POST(req: NextRequest) {
+  try {
+    const authHeader = req.headers.get("authorization") || "";
+    const match = authHeader.match(/^Bearer (.+)$/);
+    if (!match) return NextResponse.json({ error: "No token provided" }, { status: 401 });
+    const idToken = match[1];
+    const decoded = await adminAuth.verifyIdToken(idToken);
+    const uid = decoded.uid;
+    const body = await req.json();
+    const { fullname, username, dob, phone, email } = body;
+    const db = getFirestore();
+    await db.collection("users").doc(uid).set({
+      fullname,
+      username,
+      dob,
+      phone,
+      email,
+      createdAt: new Date(),
+    });
+    return NextResponse.json({ success: true }, { status: 201 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 401 });
+  }
+} 

@@ -65,7 +65,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-2 md:flex">
           <a
-            href="#login"  /* update this link as needed */
+            href="/login"  /* update this link as needed */
             className="flex items-center gap-2 rounded-md bg-[#2C2C2C] px-4 py-2 text-sm text-white/90 transition hover:bg-[#3C3C3C]"
           >
             Login
@@ -139,7 +139,7 @@ export default function Navbar() {
             Enterprise
           </Link>
           <a
-            href="#login"
+            href="/login"
             className="flex items-center gap-2 rounded-md bg-[#2C2C2C] px-4 py-2 text-sm text-white/90 transition hover:bg-[#3C3C3C]"
             onClick={toggleMenu}
           >
