@@ -109,34 +109,18 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
           {developers.map((developer, index) => (
             <div key={index} className="flex flex-col items-center text-center">
-              <div
-                className="w-full aspect-square bg-gray-300 rounded-lg overflow-hidden 
-                flex items-center justify-center text-white font-semibold text-lg 
-                transform transition-transform duration-300 hover:scale-105"
-                style={{
-                  backgroundImage: `url('${developer.image}')`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+              <DeveloperCard
+                developer={{
+                  imgSrc: developer.image,
+                  title: developer.title,
+                  name: developer.name,
                 }}
-              >
-                {/* If image is missing */}
-                {!developer.image && "PLACEHOLDER"}
-              </div>
-              <p className="mt-4 text-white text-base font-medium">
-                {developer.title}
-              </p>
+              />
             </div>
           ))}
         </div>
       </div>
 
-      <DeveloperCard
-        developer={{
-          imgSrc: developers[0].image,
-          title: developers[0].title,
-          name: developers[0].name,
-        }}
-      />
     </div>
   );
 }
