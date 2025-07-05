@@ -20,10 +20,7 @@ export default function DeveloperCard() {
         <div className="p-4 space-y-2">
           <h3 className="text-xl font-semibold">Product Title</h3>
           <p className="text-gray-500 dark:text-gray-400">This is a description of the product.</p>
-          <div className="flex items-center justify-between">
-            <span className="text-lg font-bold">$49.99</span>
-            <Button>Add to Cart</Button>
-          </div>
+          
         </div>
       </div>
     </div>
