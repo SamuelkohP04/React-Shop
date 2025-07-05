@@ -5,12 +5,12 @@
  */
 import { Button } from "@/components/ui/button"
 
-export default function DeveloperCard() {
+export default function DeveloperCard(imgSrc: string, title: string, name: string, description: string) {
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl dark:bg-gray-950">
         <img
-          src="/placeholder.svg"
+          src={imgSrc}
           alt="Product Image"
           width={600}
           height={400}
@@ -18,9 +18,10 @@ export default function DeveloperCard() {
           style={{ aspectRatio: "600/400", objectFit: "cover" }}
         />
         <div className="p-4 space-y-2">
-          <h3 className="text-xl font-semibold">Product Title</h3>
-          <p className="text-gray-500 dark:text-gray-400">This is a description of the product.</p>
-          
+          <h4 className="text-xl font-semibold">{title}</h4>
+          <h2 className="text-lg text-gray-700 dark:text-gray-300">{name}</h2>
+          <p className="text-gray-500 dark:text-gray-400">{description}</p>
+
         </div>
       </div>
     </div>
