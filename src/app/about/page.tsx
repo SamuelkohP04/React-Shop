@@ -66,53 +66,48 @@ export default function AboutPage() {
       </h1> */}
 
       <div className="max-w-6xl mx-auto">
-      <h1
-        className="text-4xl font-bold text-white pt-10
+        <h1
+          className="text-4xl font-bold text-white pt-10
       m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl 
       mx-auto"
-      >
-        Hello, I'm Benjamin Koh!
-      </h1>
+        >
+          Hello, I'm Benjamin Koh!
+        </h1>
 
-      <div className="flex flex-row items-center justify-center min-h-screen m-20">
-        <div className="w-14 flex-1">
-          <img
-            src="/LandingPage/FakePerson1.jpeg"
-            alt="Logo"
-            className="w-full h-auto"
-          />
+        <div className="flex flex-row items-center justify-center min-h-screen m-20">
+          <div className="w-14 flex-1">
+            <img
+              src="/LandingPage/FakePerson1.jpeg"
+              alt="Logo"
+              className="w-full h-auto"
+            />
+          </div>
+
+          <div className="w-28 flex-1">
+            <p className="text-base sm:text-lg text-white m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl mx-auto">
+              I'm a Tarot Card Reading/Numerology Consultant with more than 12
+              years of experience. I provide assistance & guidance to clients
+              who face difficult situations to solve their personal problems &
+              life issues. <br /> <br />I am also an experienced Energy Healer
+              in Quantum Touch & Pranic Healing.
+              <br /> <br />
+              My mission is to help individuals achieve greater self-awareness,
+              personal growth, and spiritual enlightenment through the
+              transformative power of Tarot readings and energy healing.
+            </p>
+          </div>
         </div>
 
-        <div className="w-28 flex-1">
-          <p className="text-base sm:text-lg text-white m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl mx-auto">
-            I'm a Tarot Card Reading/Numerology Consultant with more than 12
-            years of experience. I provide assistance & guidance to clients who
-            face difficult situations to solve their personal problems & life
-            issues. <br /> <br />I am also an experienced Energy Healer in
-            Quantum Touch & Pranic Healing.
-
-
-            <br /> <br />
-            My mission is to help individuals achieve greater self-awareness, personal growth,
-            and spiritual enlightenment through the transformative power of Tarot
-            readings and energy healing.
-            
-          </p>
-        </div>
-
-      </div>
-
-
-      <h1
-        className="text-4xl font-bold text-white pt-10
+        <h1
+          className="text-4xl font-bold text-white pt-10
       m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl 
       mx-auto"
-      >
-        Our Consultation Booking Automation Team
-      </h1>
+        >
+          Our Consultation Booking Automation Team
+        </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
-        {developers.map((developer, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
+          {developers.map((developer, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <div
                 className="w-full aspect-square bg-gray-300 rounded-lg overflow-hidden 
@@ -132,18 +127,16 @@ export default function AboutPage() {
               </p>
             </div>
           ))}
-
-    
+        </div>
       </div>
 
-  </div>
-
-  <DeveloperCard developer={{
-    imgSrc: "/LandingPage/FakePerson1.jpeg",
-    title: "Samuel Koh",
-    name: "Samuel Koh",
-    description: "Lead Software Engineer"
-  }} />
+      <DeveloperCard
+        developer={{
+          imgSrc: developers[0].image,
+          title: developers[0].title,
+          name: developers[0].name,
+        }}
+      />
     </div>
   );
 }

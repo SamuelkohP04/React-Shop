@@ -10,7 +10,7 @@ interface DeveloperCardProps {
     imgSrc: string;
     title: string;
     name: string;
-    description: string;
+    //description: string;
   };
 }
 
@@ -30,7 +30,7 @@ export default function DeveloperCard({ developer }: DeveloperCardProps) {
         <div className="p-4 space-y-2">
           <h4 className="text-xl font-semibold">{developer.title}</h4>
           <h2 className="text-lg text-gray-700 dark:text-gray-300">{developer.name}</h2>
-          <p className="text-gray-500 dark:text-gray-400">{developer.description}</p>
+          {/* <p className="text-gray-500 dark:text-gray-400">{developer.description}</p> */}
 
         </div>
       </div>
