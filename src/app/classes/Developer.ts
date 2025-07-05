@@ -1,4 +1,4 @@
-class Developer {
+export class Developer {
   name: string;
   title: string;
   image: string | null;
@@ -10,6 +10,12 @@ class Developer {
     this.image = image;
     this.description = description;
   }
-}
 
-export default Developer;
+  getLinkedInUrl(): string {
+    return "Linkedin clicked!";
+  }
+
+  getEmailUrl(): string {
+    return "Email clicked!";
+  }
+}
