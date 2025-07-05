@@ -34,12 +34,12 @@ export default function MembershipPage() {
 
       <div>
         <Navbar />
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Membership</h1>
-        <p className="text-lg text-gray-600">
+        <h1 className="text-4xl font-bold text-white mb-8">Membership</h1>
+        <p className="text-lg text-white m-14 max-w-2xl mx-auto">
           Welcome to our membership page! Here you can find information about
           our membership plans.
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-2 gap-8 place-items-center max-w-4xl px-8 mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-8 place-items-center mt-10 max-w-4xl mx-auto">
           {membershipPlans.map((plan, index) => (
             <div key={index} className="flex flex-col items-center">
               <div
