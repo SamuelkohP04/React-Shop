@@ -7,31 +7,40 @@ import { Developer } from "../classes/Developer";
 export default function AboutPage() {
   const developers = [
     {
-      title: "Samuel Koh",
+      name: "Samuel Koh",
+      title: "Lead Software Engineer",
       image: "/LandingPage/FakePerson1.jpeg",
     },
     {
-      title: "Koh Chin Teck",
+      name: "Koh Chin Teck",
+      title: "Front-end Web Developer",
       image: "/LandingPage/FakePerson2.jpeg",
     },
     {
-      title: "Ong Xin Yin",
+      name: "Ong Xin Yin",
+      title: "Backend Engineer - Telegram Bot Services",
       image: "/LandingPage/FakePerson3.jpeg",
     },
     {
-      title: "Ong Xin Yin",
+      name: "Xu Jia Wei",
+      title: "Backend Engineer - Telegram Bot Services",
       image: "/LandingPage/FakePerson1.jpeg",
     },
-
     {
-      title: "Ong Xin Yin",
+      name: "John Wong",
+      title: "Software Engineer",
       image: "/LandingPage/FakePerson1.jpeg",
     },
-
     {
-      title: "Ong Xin Yin",
+      name: "Cheryl Neo",
+      title: "User Interface/User Experience Designer",
       image: "/LandingPage/FakePerson1.jpeg",
-    }
+    },
+    {
+      name: "Ang Wei Liang",
+      title: "Software Engineer",
+      image: "/LandingPage/FakePerson1.jpeg",
+    },
     // new Developer("Samuel Koh", "Lead Software Engineer", "/LandingPage/FakePerson1.jpeg"),
     // new Developer("Koh Chin Teck", "Front-end Web Developer", "/LandingPage/FakePerson2.jpeg"),
     // new Developer("Ong Xin Yin", "Backend Engineer - Telegram Bot Services", "/LandingPage/FakePerson3.jpeg"),
