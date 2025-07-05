@@ -34,6 +34,7 @@ export default function AboutPage() {
         About Awareness Living
       </h1> */}
 
+      <div className="max-w-6xl mx-auto">
       <h1
         className="text-4xl font-bold text-white pt-10
       m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl 
@@ -79,7 +80,7 @@ export default function AboutPage() {
         Our Consultation Booking Automation Team
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
         {developers.map((developer, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <div
@@ -104,7 +105,7 @@ export default function AboutPage() {
     
       </div>
 
-
+  </div>
       
 
     </div>
