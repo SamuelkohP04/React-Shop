@@ -44,7 +44,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-8 md:flex">
           <Link
-            href="#pricing"
+            href="/about"
             className="text-base text-white/90 transition hover:text-white"
           >
             About
@@ -118,7 +118,7 @@ export default function Navbar() {
       <div className="md:hidden px-4 pb-4 pt-2 bg-[#212121]">
         <div className="flex flex-col gap-4">
           <Link
-            href="#pricing"
+            href="/about"
             className="text-base text-white/90 transition hover:text-white"
             onClick={toggleMenu}
           >
