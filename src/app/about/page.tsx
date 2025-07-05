@@ -106,6 +106,22 @@ export default function AboutPage() {
           Our Consultation Booking Automation Team
         </h1>
 
+        <p className="text-base sm:text-lg text-white m-8 sm:m-8 md:m-14 mx-auto">
+          We are a team of dedicated developers and designers who have come
+          together to create an efficient and user-friendly consultation booking
+          system. Our goal is to streamline the process of booking appointments,
+          making it easier for clients to connect with us. <br />
+          <br />
+          The aim of automating the consultation booking system is to streamline
+          the way clients book their tarot card/numerology appointments using
+          technology. Dedicated in their work, these freelance developers ensure
+          the consultation automation through technology is a success. From
+          doing proof-of-concepts of user interfaces, coding the solution, to
+          shipping to production, these engineers have contributed in their
+          respective domains. Do note that we are still in the process of
+          development and are willing to take in feedback!
+        </p>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
           {developers.map((developer, index) => (
             <div key={index} className="flex flex-col items-center text-center">
@@ -120,7 +136,6 @@ export default function AboutPage() {
           ))}
         </div>
       </div>
-
     </div>
   );
 }
