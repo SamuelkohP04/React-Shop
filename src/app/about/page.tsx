@@ -34,7 +34,7 @@ export default function AboutPage() {
     {
       name: "Cheryl Neo",
       title: "User Interface/User Experience Designer",
-      image: "/LandingPage/FakePerson1.jpeg",
+      image: "/cheryl-pic.jpg",
     },
     {
       name: "Ang Wei Liang",
@@ -131,6 +131,7 @@ export default function AboutPage() {
                   title: developer.title,
                   name: developer.name,
                 }}
+                className="w-full max-w-xs"
               />
             </div>
           ))}
