@@ -10,36 +10,43 @@ export default function AboutPage() {
       name: "Samuel Koh",
       title: "Lead Software Engineer",
       image: "/LandingPage/FakePerson1.jpeg",
+      description:"Samuel is the lead software engineer who oversees the development of the consultation booking system. With a strong background in software engineering, he ensures that the system is robust and scalable.",
     },
     {
       name: "Koh Chin Teck",
       title: "Front-end Web Developer",
       image: "/LandingPage/FakePerson2.jpeg",
+      description:"Koh Chin Teck is a front-end web developer specializing in building responsive and user-friendly interfaces. He is proficient in modern web technologies and frameworks.",
     },
     {
       name: "Ong Xin Yin",
       title: "Backend Engineer - Telegram Bot Services",
       image: "/LandingPage/FakePerson3.jpeg",
+      description:"Ong Xin Yin is a backend engineer specializing in Telegram bot services. She has extensive experience in building and maintaining chatbots that enhance user engagement and streamline communication.",  
     },
     {
       name: "Xu Jia Wei",
       title: "Backend Engineer - Telegram Bot Services",
       image: "/LandingPage/FakePerson1.jpeg",
+      description:"Xu Jia Wei is a backend engineer focused on Telegram bot services. He works on integrating the booking system with Telegram to provide a seamless user experience for clients who prefer using messaging platforms.",
     },
     {
       name: "John Wong",
       title: "Software Engineer",
       image: "/LandingPage/FakePerson1.jpeg",
+      description:"John Wong is a software engineer with expertise in developing backend systems. He plays a crucial role in ensuring the reliability and performance of the consultation booking system.",
     },
     {
       name: "Cheryl Neo",
       title: "User Interface/User Experience Designer",
       image: "/cheryl-pic.jpg",
+      description:"Conducted and applied brand research and design principles to create a scalable logo aligned with the app’s identity; also supported UI/UX development by providing design feedback",
     },
     {
       name: "Ang Wei Liang",
       title: "Software Engineer",
       image: "/LandingPage/FakePerson1.jpeg",
+      description:"Ang Wei Liang is a software engineer with a focus on developing scalable web applications. He is skilled in various programming languages and frameworks, ensuring high-quality code and performance.",
     },
     // new Developer("Samuel Koh", "Lead Software Engineer", "/LandingPage/FakePerson1.jpeg"),
     // new Developer("Koh Chin Teck", "Front-end Web Developer", "/LandingPage/FakePerson2.jpeg"),
@@ -130,8 +137,9 @@ export default function AboutPage() {
                   imgSrc: developer.image,
                   title: developer.title,
                   name: developer.name,
+                  description: developer.description,
                 }}
-                className="w-full max-w-xs"
+                
               />
             </div>
           ))}
