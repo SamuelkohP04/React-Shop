@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
       phone,
       email,
       createdAt: new Date(),
+      paymentPlan: "Basic",
     });
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error: any) {

@@ -17,4 +17,27 @@ export async function GET(req: NextRequest) {
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 401 });
   }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const authHeader = req.headers.get("authorization") || "";
+    const match = authHeader.match(/^Bearer (.+)$/);
+    if (!match) return NextResponse.json({ error: "No token provided" }, { status: 401 });
+    const idToken = match[1];
+    const decoded = await adminAuth.verifyIdToken(idToken);
+    const uid = decoded.uid;
+    const body = await req.json();
+    const { fullname, username, dob, phone } = body;
+    const db = getFirestore();
+    const updateData: any = {};
+    if (fullname !== undefined) updateData.fullname = fullname;
+    if (username !== undefined) updateData.username = username;
+    if (dob !== undefined) updateData.dob = dob ? new Date(dob) : null;
+    if (phone !== undefined) updateData.phone = phone;
+    await db.collection("users").doc(uid).update(updateData);
+    return NextResponse.json(updateData, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 401 });
+  }
 } 

@@ -91,38 +91,57 @@ function LoginCard() {
   }
 
   return (
-    <Card className="w-2/5 flex flex-col bg-slate-100 border-0 rounded p-4 gap-4 max-lg:w-5/6 opacity-90">
-      <CardHeader>
-      <div className=" ${lora.className} flex flex-col items-center text-center gap-2">
-        <h1 className="text-4xl font-bold">🌱 Awareness Living</h1>
-        <h1 className="text-2xl font-semibold">{isLogin ? "Login" : "Register"}</h1>
+    <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-br px-4">
+      {/* Back Button */}
+      <div className="absolute top-6 left-6 z-10">
+        <Button variant="outline" onClick={() => router.push("/")}>
+          ← Back
+        </Button>
+      </div>
+  
+      {/* Card stays untouched */}
+      <Card className="w-full max-w-md flex flex-col bg-slate-100 border-0 rounded p-4 gap-4 opacity-90 shadow-md">
+        <CardHeader>
+          <div className="flex flex-col items-center text-center gap-2">
+            <h1 className="text-4xl font-bold">🌱 Awareness Living</h1>
+            <h1 className="text-2xl font-semibold">{isLogin ? "Login" : "Register"}</h1>
+          </div>
+        </CardHeader>
+  
+        <CardContent className="flex flex-col gap-4">
+          {error && <div className="text-red-600">{error}</div>}
+          <Input name="email" placeholder="Email" value={formData.email} onChange={handleChange} disabled={loading} />
+          <Input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} disabled={loading} />
+  
+          {!isLogin && (
+            <>
+              <Input name="fullname" placeholder="Full Name" value={formData.fullname} onChange={handleChange} disabled={loading} />
+              <Input name="username" placeholder="Username" value={formData.username} onChange={handleChange} disabled={loading} />
+              <label className="text-left text-gray-700 text-sm font-semibold">Date of Birth</label>
+              <Input
+                name="dob"
+                type="date"
+                value={formData.dob ? format(formData.dob, "yyyy-MM-dd") : ""}
+                onChange={handleDateChange}
+                disabled={loading}
+              />
+              <Input name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} disabled={loading} />
+            </>
+          )}
+        </CardContent>
+  
+        <CardFooter className="flex flex-col gap-4">
+          <Button onClick={handleSubmit} disabled={loading}>
+            {isLogin ? "Login" : "Register"}
+          </Button>
+          <Button variant="link" onClick={() => setIsLogin(!isLogin)} disabled={loading}>
+            {isLogin ? "Don't have an account?" : "Already have an account?"}
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        {error && <div className="text-red-600">{error}</div>}
-        <Input name="email" placeholder="Email" value={formData.email} onChange={handleChange} disabled={loading} />
-        <Input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} disabled={loading} />
-
-        {!isLogin && (
-          <>
-            <Input name="fullname" placeholder="Full Name" value={formData.fullname} onChange={handleChange} disabled={loading} />
-            <Input name="username" placeholder="Username" value={formData.username} onChange={handleChange} disabled={loading} />
-            <label className="text-left text-gray-700 text-sm font-semibold">Date of Birth</label>
-            <Input name="dob" type="date" value={formData.dob ? format(formData.dob, "yyyy-MM-dd") : ""} onChange={handleDateChange} disabled={loading} />
-            <Input name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} disabled={loading} />
-          </>
-        )}
-      </CardContent>
-      <CardFooter className="flex flex-col gap-4">
-        <Button onClick={handleSubmit} disabled={loading}>
-          {isLogin ? "Login" : "Register"}
-        </Button>
-        <Button variant="link" onClick={() => setIsLogin(!isLogin)} disabled={loading}>
-          {isLogin ? "Don't have an account?" : "Already have an account?"}
-        </Button>
-      </CardFooter>
-    </Card>
   );
+  
 }
 
 export default LoginCard;

@@ -9,6 +9,7 @@ function Login() {
                 alt="Login Background"
                 className="absolute inset-0 w-full h-full object-cover brightness-75 scale-85 z-0"
             />
+            
 
             <div className="relative z-20 flex justify-center items-center w-full h-full">
                 <LoginCard />
