@@ -9,14 +9,14 @@ export default function AboutPage() {
     {
       name: "Samuel Koh",
       title: "Lead Software Engineer",
-      image: "/LandingPage/FakePerson1.jpeg",
+      image: "/developers-pfp/samuel-pic.jpg",
       description:"Samuel is the lead software engineer who oversees the development of the consultation booking system. With a strong background in software engineering, he ensures that the system is robust and scalable.",
     },
     {
       name: "Koh Chin Teck",
       title: "Front-end Web Developer",
-      image: "/LandingPage/FakePerson2.jpeg",
-      description:"Koh Chin Teck is a front-end web developer specializing in building responsive and user-friendly interfaces. He is proficient in modern web technologies and frameworks.",
+      image: "/developers-pfp/chinteck-pic.jpg",
+      description:"Carried out brand research and incorporated design best practices, further supported the UI/UX and development process by providing actionable design insights.",
     },
     {
       name: "Ong Xin Yin",
@@ -30,16 +30,16 @@ export default function AboutPage() {
       image: "/LandingPage/FakePerson1.jpeg",
       description:"Xu Jia Wei is a backend engineer focused on Telegram bot services. He works on integrating the booking system with Telegram to provide a seamless user experience for clients who prefer using messaging platforms.",
     },
-    {
-      name: "John Wong",
-      title: "Software Engineer",
-      image: "/LandingPage/FakePerson1.jpeg",
-      description:"John Wong is a software engineer with expertise in developing backend systems. He plays a crucial role in ensuring the reliability and performance of the consultation booking system.",
-    },
+    // {
+    //   name: "John Wong",
+    //   title: "Software Engineer",
+    //   image: "/LandingPage/FakePerson1.jpeg",
+    //   description:"John Wong is a software engineer with expertise in developing backend systems. He plays a crucial role in ensuring the reliability and performance of the consultation booking system.",
+    // },
     {
       name: "Cheryl Neo",
       title: "User Interface/User Experience Designer",
-      image: "/cheryl-pic.jpg",
+      image: "developers-pfp/cheryl-pic.jpg",
       description:"Conducted and applied brand research and design principles to create a scalable logo aligned with the app’s identity; also supported UI/UX development by providing design feedback",
     },
     {
