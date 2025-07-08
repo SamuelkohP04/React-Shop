@@ -1,8 +1,8 @@
-class Developer {
+export class Developer {
   name: string;
   title: string;
   image: string | null;
-  description: string | null;
+  description?: string | null;
 
   constructor(name: string, title: string, image: string | null = null, description: string | null = null) {
     this.name = name;
@@ -10,6 +10,12 @@ class Developer {
     this.image = image;
     this.description = description;
   }
-}
 
-export default Developer;
+  getLinkedInUrl(): string {
+    return "Linkedin clicked!";
+  }
+
+  getEmailUrl(): string {
+    return "Email clicked!";
+  }
+}

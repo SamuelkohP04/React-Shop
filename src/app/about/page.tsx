@@ -2,38 +2,60 @@ import React from "react";
 import Navbar from "../(site)/Navbar";
 import { Card } from "@/components/ui/card";
 import DeveloperCard from "@/components/DeveloperCard";
+import { Developer } from "../classes/Developer";
 
 export default function AboutPage() {
   const developers = [
     {
-      title: "Samuel Koh",
-      image: "/LandingPage/FakePerson1.jpeg",
+      name: "Samuel Koh",
+      title: "Lead Software Engineer",
+      image: "/developers-pfp/samuel-pic.jpg",
+      description:"Samuel is the lead software engineer who oversees the development of the consultation booking system. With a strong background in software engineering, he ensures that the system is robust and scalable.",
     },
     {
-      title: "Koh Chin Teck",
-      image: "/LandingPage/FakePerson2.jpeg",
+      name: "Koh Chin Teck",
+      title: "Front-end Web Developer",
+      image: "/developers-pfp/chinteck-pic.jpg",
+      description:"Carried out brand research and incorporated design best practices, further supported the UI/UX and development process by providing actionable design insights.",
     },
     {
-      title: "Ong Xin Yin",
+      name: "Ong Xin Yin",
+      title: "Backend Engineer - Telegram Bot Services",
       image: "/LandingPage/FakePerson3.jpeg",
+      description:"Ong Xin Yin is a backend engineer specializing in Telegram bot services. She has extensive experience in building and maintaining chatbots that enhance user engagement and streamline communication.",  
     },
     {
-      title: "Ong Xin Yin",
+      name: "Xu Jia Wei",
+      title: "Backend Engineer - Telegram Bot Services",
       image: "/LandingPage/FakePerson1.jpeg",
+      description:"Xu Jia Wei is a backend engineer focused on Telegram bot services. He works on integrating the booking system with Telegram to provide a seamless user experience for clients who prefer using messaging platforms.",
     },
-
+    // {
+    //   name: "John Wong",
+    //   title: "Software Engineer",
+    //   image: "/LandingPage/FakePerson1.jpeg",
+    //   description:"John Wong is a software engineer with expertise in developing backend systems. He plays a crucial role in ensuring the reliability and performance of the consultation booking system.",
+    // },
     {
-      title: "Ong Xin Yin",
-      image: "/LandingPage/FakePerson1.jpeg",
+      name: "Cheryl Neo",
+      title: "User Interface/User Experience Designer",
+      image: "developers-pfp/cheryl-pic.jpg",
+      description:"Conducted and applied brand research and design principles to create a scalable logo aligned with the app’s identity; also supported UI/UX development by providing design feedback",
     },
-
     {
-      title: "Ong Xin Yin",
+      name: "Ang Wei Liang",
+      title: "Software Engineer",
       image: "/LandingPage/FakePerson1.jpeg",
+      description:"Ang Wei Liang is a software engineer with a focus on developing scalable web applications. He is skilled in various programming languages and frameworks, ensuring high-quality code and performance.",
     },
+    // new Developer("Samuel Koh", "Lead Software Engineer", "/LandingPage/FakePerson1.jpeg"),
+    // new Developer("Koh Chin Teck", "Front-end Web Developer", "/LandingPage/FakePerson2.jpeg"),
+    // new Developer("Ong Xin Yin", "Backend Engineer - Telegram Bot Services", "/LandingPage/FakePerson3.jpeg"),
+    // new Developer("Xu Jia Wei", "Backend Engineer - Telegram Bot Services", "/LandingPage/FakePerson1.jpeg"),
+    // new Developer("John Wong", "Software Engineer", "/LandingPage/FakePerson1.jpeg"),
+    // new Developer("Cheryl Neo", "User Interface/User Experience Designer", "/LandingPage/FakePerson1.jpeg"),
+    // new Developer("Ang Wei Liang", "Software Engineer", "/LandingPage/FakePerson1.jpeg"),
   ];
-
-
 
   return (
     <div className="relative bg-black/20">
@@ -51,85 +73,78 @@ export default function AboutPage() {
       </h1> */}
 
       <div className="max-w-6xl mx-auto">
-      <h1
-        className="text-4xl font-bold text-white pt-10
+        <h1
+          className="text-4xl font-bold text-white pt-10
       m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl 
       mx-auto"
-      >
-        Hello, I'm Benjamin Koh!
-      </h1>
+        >
+          Hello, I'm Benjamin Koh!
+        </h1>
 
-      <div className="flex flex-row items-center justify-center min-h-screen m-20">
-        <div className="w-14 flex-1">
-          <img
-            src="/LandingPage/FakePerson1.jpeg"
-            alt="Logo"
-            className="w-full h-auto"
-          />
+        <div className="flex flex-row items-center justify-center min-h-screen m-20">
+          <div className="w-14 flex-1">
+            <img
+              src="/LandingPage/FakePerson1.jpeg"
+              alt="Logo"
+              className="w-full h-auto"
+            />
+          </div>
+
+          <div className="w-28 flex-1">
+            <p className="text-base sm:text-lg text-white m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl mx-auto">
+              I'm a Tarot Card Reading/Numerology Consultant with more than 12
+              years of experience. I provide assistance & guidance to clients
+              who face difficult situations to solve their personal problems &
+              life issues. <br /> <br />I am also an experienced Energy Healer
+              in Quantum Touch & Pranic Healing.
+              <br /> <br />
+              My mission is to help individuals achieve greater self-awareness,
+              personal growth, and spiritual enlightenment through the
+              transformative power of Tarot readings and energy healing.
+            </p>
+          </div>
         </div>
 
-        <div className="w-28 flex-1">
-          <p className="text-base sm:text-lg text-white m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl mx-auto">
-            I'm a Tarot Card Reading/Numerology Consultant with more than 12
-            years of experience. I provide assistance & guidance to clients who
-            face difficult situations to solve their personal problems & life
-            issues. <br /> <br />I am also an experienced Energy Healer in
-            Quantum Touch & Pranic Healing.
-
-
-            <br /> <br />
-            My mission is to help individuals achieve greater self-awareness, personal growth,
-            and spiritual enlightenment through the transformative power of Tarot
-            readings and energy healing.
-            
-          </p>
-        </div>
-
-      </div>
-
-
-      <h1
-        className="text-4xl font-bold text-white pt-10
+        <h1
+          className="text-4xl font-bold text-white pt-10
       m-4 sm:m-8 md:m-14 max-w-sm sm:max-w-md md:max-w-2xl 
       mx-auto"
-      >
-        Our Consultation Booking Automation Team
-      </h1>
+        >
+          Our Consultation Booking Automation Team
+        </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
-        {developers.map((developer, index) => (
+        <p className="text-base sm:text-lg text-white m-8 sm:m-8 md:m-14 mx-auto">
+          We are a team of dedicated developers and designers who have come
+          together to create an efficient and user-friendly consultation booking
+          system. Our goal is to streamline the process of booking appointments,
+          making it easier for clients to connect with us. <br />
+          <br />
+          The aim of automating the consultation booking system is to streamline
+          the way clients book their tarot card/numerology appointments using
+          technology. Dedicated in their work, these freelance developers ensure
+          the consultation automation through technology is a success. From
+          doing proof-of-concepts of user interfaces, coding the solution, to
+          shipping to production, these engineers have contributed in their
+          respective domains. Do note that we are still in the process of
+          development and are willing to take in feedback!
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
+          {developers.map((developer, index) => (
             <div key={index} className="flex flex-col items-center text-center">
-              <div
-                className="w-full aspect-square bg-gray-300 rounded-lg overflow-hidden 
-                flex items-center justify-center text-white font-semibold text-lg 
-                transform transition-transform duration-300 hover:scale-105"
-                style={{
-                  backgroundImage: `url('${developer.image}')`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+              <DeveloperCard
+                developer={{
+                  imgSrc: developer.image,
+                  title: developer.title,
+                  name: developer.name,
+                  description: developer.description,
                 }}
-              >
-                {/* If image is missing */}
-                {!developer.image && "PLACEHOLDER"}
-              </div>
-              <p className="mt-4 text-white text-base font-medium">
-                {developer.title}
-              </p>
+                
+              />
             </div>
           ))}
-
-    
+        </div>
       </div>
-
-  </div>
-
-  <DeveloperCard 
-  imgSrc="/LandingPage/FakePerson1.jpeg"
-  title="Senior React Developer"
-  name="Jane Smith" 
-  description="Passionate about creating intuitive user experiences with modern web technologies."
-/>
-
     </div>
   );
 }
