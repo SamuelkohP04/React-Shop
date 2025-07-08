@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="w-full flex justify-between items-center text-sm text-zinc-500">
         {/* Left-aligned copyright */}
         <div className="ml-4">
-          © 2024 Agree.com. All Rights Reserved.
+          © 2025 AwarenessLiving.com. All Rights Reserved.
         </div>
 
         {/* Right-aligned nav */}
