@@ -15,13 +15,22 @@ import { auth } from "@/lib/firebaseClient";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { format } from "date-fns";
 
+type FormData = {
+  email: string;
+  password: string;
+  fullname: string;
+  username: string;
+  phone: string;
+  dob: Date | null;
+};
+
 function LoginCard() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
     fullname: "",

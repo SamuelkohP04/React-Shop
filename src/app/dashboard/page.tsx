@@ -16,6 +16,9 @@ export default function DashboardPage() {
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState<any>({});
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [bookings, setBookings] = useState<any[]>([]);
+  const [bookingsLoading, setBookingsLoading] = useState(false);
+  const [bookingsError, setBookingsError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -68,6 +71,31 @@ export default function DashboardPage() {
 
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    async function fetchBookings() {
+      if (!profile || !auth.currentUser) return;
+      setBookingsLoading(true);
+      setBookingsError(null);
+      try {
+        const idToken = await auth.currentUser.getIdToken();
+        const res = await fetch("/api/myBookings", {
+          headers: { Authorization: `Bearer ${idToken}` },
+        });
+        if (!res.ok) {
+          const { error } = await res.json();
+          throw new Error(error || "Failed to fetch bookings");
+        }
+        const data = await res.json();
+        setBookings(data.bookings || []);
+      } catch (err: any) {
+        setBookingsError(err.message);
+      } finally {
+        setBookingsLoading(false);
+      }
+    }
+    if (profile) fetchBookings();
+  }, [profile]);
 
   const handleLogout = async () => {
     await auth.signOut();
@@ -167,7 +195,11 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
+      {/* Book button */}
+      <div className="w-full flex justify-center mb-4">
+        <Button className="bg-blue-600 text-white font-bold" onClick={() => router.push("/dashboard/book")}>Book through web now</Button>
+      </div>
       {/* Logout button */}
       <div className="fixed top-6 right-8 z-30">
         <Button variant="outline" onClick={handleLogout} className="font-semibold">Logout</Button>
@@ -237,6 +269,38 @@ export default function DashboardPage() {
           )}
         </CardContent>
       </Card>
+      {/* Bookings Section */}
+      <div className="w-full max-w-2xl mt-8 bg-white/90 rounded-xl shadow-lg p-6">
+        <h2 className="text-2xl font-bold mb-4 text-blue-700">My Bookings</h2>
+        {bookingsLoading ? (
+          <div>Loading bookings...</div>
+        ) : bookingsError ? (
+          <div className="text-red-600">{bookingsError}</div>
+        ) : bookings.length === 0 ? (
+          <div>No bookings found.</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full border text-left">
+              <thead>
+                <tr className="bg-blue-100">
+                  <th className="py-2 px-4 border">Service</th>
+                  <th className="py-2 px-4 border">Date</th>
+                  <th className="py-2 px-4 border">Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.map((b) => (
+                  <tr key={b.id} className="border-b">
+                    <td className="py-2 px-4 border">{b.service}</td>
+                    <td className="py-2 px-4 border">{b.date ? (new Date(b.date).toLocaleString()) : '-'}</td>
+                    <td className="py-2 px-4 border">{b.remarks || '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 } 
