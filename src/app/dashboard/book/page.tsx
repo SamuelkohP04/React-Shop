@@ -19,6 +19,7 @@ export default function BookPage() {
   const [step, setStep] = useState(1);
   const [service, setService] = useState<string>("");
   const [date, setDate] = useState<Date | null>(null);
+
   const [remarks, setRemarks] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
