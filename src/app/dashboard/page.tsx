@@ -8,6 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { onAuthStateChanged } from "firebase/auth";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import dynamic from "next/dynamic";
+
+// @ts-expect-error
+const DatePicker = dynamic<any>(() => import("react-datepicker").then(m => m.default), { ssr: false });
 
 export default function DashboardPage() {
   const [profile, setProfile] = useState<any>(null);
@@ -16,6 +22,16 @@ export default function DashboardPage() {
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState<any>({});
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [bookings, setBookings] = useState<any[]>([]);
+  const [bookingsLoading, setBookingsLoading] = useState(false);
+  const [bookingsError, setBookingsError] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [modalBooking, setModalBooking] = useState<any | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [rescheduleMode, setRescheduleMode] = useState(false);
+  const [rescheduleDate, setRescheduleDate] = useState<Date | null>(null);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [modalError, setModalError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -68,6 +84,31 @@ export default function DashboardPage() {
 
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    async function fetchBookings() {
+      if (!profile || !auth.currentUser) return;
+      setBookingsLoading(true);
+      setBookingsError(null);
+      try {
+        const idToken = await auth.currentUser.getIdToken();
+        const res = await fetch("/api/myBookings", {
+          headers: { Authorization: `Bearer ${idToken}` },
+        });
+        if (!res.ok) {
+          const { error } = await res.json();
+          throw new Error(error || "Failed to fetch bookings");
+        }
+        const data = await res.json();
+        setBookings(data.bookings || []);
+      } catch (err: any) {
+        setBookingsError(err.message);
+      } finally {
+        setBookingsLoading(false);
+      }
+    }
+    if (profile) fetchBookings();
+  }, [profile]);
 
   const handleLogout = async () => {
     await auth.signOut();
@@ -149,6 +190,105 @@ export default function DashboardPage() {
     }
   };
 
+  // Helper: get bookings for a date
+  const getBookingsForDate = (date: Date) => {
+    const ymd = date.toISOString().slice(0, 10);
+    return bookings.filter(b => b.date && b.date.slice(0, 10) === ymd);
+  };
+
+  // Calendar tile content: show a dot for each booking
+  const tileContent = ({ date, view }: any) => {
+    if (view === "month") {
+      const count = getBookingsForDate(date).length;
+      if (count > 0) {
+        return (
+          <div className="flex justify-center items-center mt-1">
+            {Array.from({ length: count }).map((_, i) => (
+              <span key={i} className="inline-block w-2 h-2 bg-blue-600 rounded-full mx-0.5"></span>
+            ))}
+          </div>
+        );
+      }
+    }
+    return null;
+  };
+
+  // On date click, show modal with all bookings for that date
+  const handleDateClick = (date: Date) => {
+    const bookingsOnDate = getBookingsForDate(date);
+    if (bookingsOnDate.length > 0) {
+      setSelectedDate(date);
+      setModalBooking(bookingsOnDate); // now an array
+      setShowModal(true);
+    }
+  };
+
+  // Cancel booking with confirmation
+  const handleCancelBooking = async (booking: any) => {
+    if (!window.confirm("Are you sure you want to cancel this booking? No refunds will be issued.")) return;
+    setModalLoading(true);
+    setModalError(null);
+    try {
+      const user = auth.currentUser;
+      if (!user) throw new Error("Not authenticated");
+      const idToken = await user.getIdToken();
+      const res = await fetch("/api/cancelBooking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ bookingId: booking.id }),
+      });
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error || "Failed to cancel booking");
+      }
+      setBookings(bookings.filter(b => b.id !== booking.id));
+      setShowModal(false);
+    } catch (err: any) {
+      setModalError(err.message);
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  // Reschedule booking with confirmation using react-calendar
+  const [calendarRescheduleDate, setCalendarRescheduleDate] = useState<Date | null>(null);
+
+  // Reschedule booking with confirmation
+  const handleRescheduleBooking = async (booking: any, newDate: Date | null) => {
+    if (!newDate) return;
+    if (!window.confirm("Are you sure you want to reschedule this booking?")) return;
+    setModalLoading(true);
+    setModalError(null);
+    try {
+      const user = auth.currentUser;
+      if (!user) throw new Error("Not authenticated");
+      const idToken = await user.getIdToken();
+      const res = await fetch("/api/rescheduleBooking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ bookingId: booking.id, newDate: newDate.toISOString() }),
+      });
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error || "Failed to reschedule booking");
+      }
+      setBookings(bookings.map(b => b.id === booking.id ? { ...b, date: newDate.toISOString() } : b));
+      setShowModal(false);
+      setRescheduleMode(false);
+      setRescheduleDate(null);
+    } catch (err: any) {
+      setModalError(err.message);
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -167,76 +307,76 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
+      {/* Welcome message */}
+      <h1 className="text-3xl font-extrabold text-center text-blue-700 mt-8 mb-4">Welcome Back, {profile?.username || profile?.fullname || "User"}!</h1>
+      {/* Book button */}
+      <div className="w-full flex justify-center mb-4">
+        <Button className="bg-blue-600 text-white font-bold" onClick={() => router.push("/dashboard/book")}>Book through web now</Button>
+      </div>
+      {/* Profile button */}
+      <div className="w-full flex justify-center mb-4">
+        <Button variant="outline" onClick={() => router.push("/dashboard/profile")}>View/Edit Personal Information</Button>
+      </div>
       {/* Logout button */}
       <div className="fixed top-6 right-8 z-30">
         <Button variant="outline" onClick={handleLogout} className="font-semibold">Logout</Button>
       </div>
-      <Card className="w-full max-w-lg shadow-2xl rounded-2xl bg-white/90 border-0 p-8">
-        <CardHeader className="mb-4 text-center">
-          <h1 className="text-4xl font-extrabold text-blue-700 mb-2 tracking-tight">Welcome, {profile.fullname || profile.username}!</h1>
-          <h2 className="text-lg text-gray-600">Your Profile</h2>
-        </CardHeader>
-        <CardContent>
-          {successMsg && <div className="text-green-600 text-center mb-2">{successMsg}</div>}
-          {editMode ? (
-            <div className="grid grid-cols-1 gap-4 text-lg">
-              <div>
-                <span className="font-semibold">Full Name:</span>
-                <Input name="fullname" value={editData.fullname} onChange={handleEditChange} className="ml-2" />
-              </div>
-              <div>
-                <span className="font-semibold">Username:</span>
-                <Input name="username" value={editData.username} onChange={handleEditChange} className="ml-2" />
-              </div>
-              <div>
-                <span className="font-semibold">Date of Birth:</span>
-                <Input name="dob" type="date" value={editData.dob} onChange={handleEditChange} className="ml-2" />
-              </div>
-              <div>
-                <span className="font-semibold">Phone:</span>
-                <Input name="phone" value={editData.phone} onChange={handleEditChange} className="ml-2" />
-              </div>
-              <div>
-                <span className="font-semibold">Email:</span> {profile.email}
-              </div>
-              <div>
-                <span className="font-semibold">Joined:</span> {profile.createdAt}
-              </div>
-              <div>
-                <span className="font-semibold">Payment Plan:</span> {profile.paymentPlan || "none"}
-              </div>
-              {profile.paymentPlan === "Basic" && (
-                <div className="flex gap-2 mt-2">
-                  <Button onClick={handleUpgrade} disabled={loading} className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold">Upgrade to Enlightenment ($10)</Button>
-                </div>
-              )}
-              <div className="flex gap-2 mt-2">
-                <Button onClick={handleSave} disabled={loading}>Save</Button>
-                <Button variant="outline" onClick={() => { setEditMode(false); setEditData({ fullname: profile.fullname, username: profile.username, dob: profile.dob ? format(new Date(profile.dob), "yyyy-MM-dd") : "", phone: profile.phone }); setSuccessMsg(null); }}>Cancel</Button>
-              </div>
+      {/* Bookings Calendar Section */}
+      <div className="w-full max-w-2xl flex flex-col items-center justify-center mt-8 bg-white/90 rounded-xl shadow-lg p-6">
+        <h2 className="text-2xl font-bold mb-4 text-blue-700 text-center">My Bookings</h2>
+        {bookingsLoading ? (
+          <div>Loading bookings...</div>
+        ) : bookingsError ? (
+          <div className="text-red-600">{bookingsError}</div>
+        ) : (
+          <>
+            <div className="flex justify-center">
+              <Calendar
+                tileContent={tileContent}
+                onClickDay={handleDateClick}
+                className="mb-4"
+              />
             </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-4 text-lg">
-              <div><span className="font-semibold">Full Name:</span> {profile.fullname}</div>
-              <div><span className="font-semibold">Username:</span> {profile.username}</div>
-              <div><span className="font-semibold">Date of Birth:</span> {profile.dob}</div>
-              <div><span className="font-semibold">Phone:</span> {profile.phone}</div>
-              <div><span className="font-semibold">Email:</span> {profile.email}</div>
-              <div><span className="font-semibold">Joined:</span> {profile.createdAt}</div>
-              <div><span className="font-semibold">Payment Plan:</span> {profile.paymentPlan || "none"}</div>
-              {profile.paymentPlan === "Basic" && (
-                <div className="flex gap-2 mt-2">
-                  <Button onClick={handleUpgrade} disabled={loading} className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold">Upgrade to Enlightenment ($10)</Button>
+            {showModal && modalBooking && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+                <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+                  <button className="absolute top-2 right-2 text-gray-500" onClick={() => { setShowModal(false); setRescheduleMode(false); setModalError(null); }}>&times;</button>
+                  <h3 className="text-xl font-bold mb-2">Bookings for {selectedDate ? selectedDate.toLocaleDateString() : ""}</h3>
+                  {Array.isArray(modalBooking) && modalBooking.map((booking, idx) => (
+                    <div key={booking.id} className="mb-4 border-b pb-4 last:border-b-0 last:pb-0">
+                      <div className="mb-2"><span className="font-semibold">Service:</span> {booking.service}</div>
+                      <div className="mb-2"><span className="font-semibold">Date:</span> {booking.date ? (new Date(booking.date).toLocaleString()) : '-'}</div>
+                      <div className="mb-2"><span className="font-semibold">Remarks:</span> {booking.remarks || '-'}</div>
+                      {modalError && <div className="text-red-600 mb-2">{modalError}</div>}
+                      {rescheduleMode === booking.id ? (
+                        <div className="flex flex-col gap-2 mt-2 items-center">
+                          <Calendar
+                            onClickDay={(date: Date) => {
+                              setCalendarRescheduleDate(date);
+                              if (window.confirm("Are you sure you want to reschedule this booking?")) {
+                                handleRescheduleBooking(booking, date);
+                              }
+                            }}
+                            minDate={new Date()}
+                            value={calendarRescheduleDate || (booking.date ? new Date(booking.date) : new Date())}
+                          />
+                          <Button variant="outline" onClick={() => { setRescheduleMode(false); setCalendarRescheduleDate(null); }}>Cancel</Button>
+                        </div>
+                      ) : (
+                        <div className="flex gap-2 mt-2">
+                          <Button variant="destructive" onClick={() => handleCancelBooking(booking)} disabled={modalLoading}>Cancel Booking</Button>
+                          <Button variant="outline" onClick={() => { setRescheduleMode(booking.id); setCalendarRescheduleDate(booking.date ? new Date(booking.date) : new Date()); }}>Reschedule</Button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              )}
-              <div className="flex gap-2 mt-2">
-                <Button onClick={() => setEditMode(true)}>Edit</Button>
               </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 } 
