@@ -10,10 +10,16 @@ import { format } from "date-fns";
 import { onAuthStateChanged } from "firebase/auth";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import dynamic from "next/dynamic";
 
-// @ts-expect-error
-const DatePicker = dynamic<any>(() => import("react-datepicker").then(m => m.default), { ssr: false });
+const TIME_SLOTS = [
+  "10:00",
+  "11:00", 
+  "12:00",
+  "12:45",
+  "14:00",
+  "15:00",
+  "16:00"
+];
 
 export default function DashboardPage() {
   const [profile, setProfile] = useState<any>(null);
@@ -255,9 +261,10 @@ export default function DashboardPage() {
 
   // Reschedule booking with confirmation using react-calendar
   const [calendarRescheduleDate, setCalendarRescheduleDate] = useState<Date | null>(null);
+  const [rescheduleTimeSlot, setRescheduleTimeSlot] = useState<string>("");
 
   // Reschedule booking with confirmation
-  const handleRescheduleBooking = async (booking: any, newDate: Date | null) => {
+  const handleRescheduleBooking = async (booking: any, newDate: Date | null, newTimeSlot?: string) => {
     if (!newDate) return;
     if (!window.confirm("Are you sure you want to reschedule this booking?")) return;
     setModalLoading(true);
@@ -272,16 +279,25 @@ export default function DashboardPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
         },
-        body: JSON.stringify({ bookingId: booking.id, newDate: newDate.toISOString() }),
+        body: JSON.stringify({ 
+          bookingId: booking.id, 
+          newDate: newDate.toISOString(),
+          newTimeSlot: newTimeSlot || booking.timeSlot 
+        }),
       });
       if (!res.ok) {
         const { error } = await res.json();
         throw new Error(error || "Failed to reschedule booking");
       }
-      setBookings(bookings.map(b => b.id === booking.id ? { ...b, date: newDate.toISOString() } : b));
+      setBookings(bookings.map(b => b.id === booking.id ? { 
+        ...b, 
+        date: newDate.toISOString(),
+        timeSlot: newTimeSlot || b.timeSlot 
+      } : b));
       setShowModal(false);
       setRescheduleMode(false);
-      setRescheduleDate(null);
+      setCalendarRescheduleDate(null);
+      setRescheduleTimeSlot("");
     } catch (err: any) {
       setModalError(err.message);
     } finally {
@@ -347,6 +363,7 @@ export default function DashboardPage() {
                     <div key={booking.id} className="mb-4 border-b pb-4 last:border-b-0 last:pb-0">
                       <div className="mb-2"><span className="font-semibold">Service:</span> {booking.service}</div>
                       <div className="mb-2"><span className="font-semibold">Date:</span> {booking.date ? (new Date(booking.date).toLocaleString()) : '-'}</div>
+                      <div className="mb-2"><span className="font-semibold">Time:</span> {booking.timeSlot || '-'}</div>
                       <div className="mb-2"><span className="font-semibold">Remarks:</span> {booking.remarks || '-'}</div>
                       {modalError && <div className="text-red-600 mb-2">{modalError}</div>}
                       {rescheduleMode === booking.id ? (
@@ -354,19 +371,46 @@ export default function DashboardPage() {
                           <Calendar
                             onClickDay={(date: Date) => {
                               setCalendarRescheduleDate(date);
-                              if (window.confirm("Are you sure you want to reschedule this booking?")) {
-                                handleRescheduleBooking(booking, date);
-                              }
                             }}
                             minDate={new Date()}
                             value={calendarRescheduleDate || (booking.date ? new Date(booking.date) : new Date())}
                           />
-                          <Button variant="outline" onClick={() => { setRescheduleMode(false); setCalendarRescheduleDate(null); }}>Cancel</Button>
+                          <div className="text-lg font-semibold mb-2">Select new time slot:</div>
+                          <div className="grid grid-cols-2 gap-2">
+                            {TIME_SLOTS.map((slot) => (
+                              <Button 
+                                key={slot} 
+                                className={`w-full ${rescheduleTimeSlot === slot ? "bg-blue-600 text-white" : ""}`} 
+                                onClick={() => setRescheduleTimeSlot(slot)}
+                              >
+                                {slot}
+                              </Button>
+                            ))}
+                          </div>
+                          <div className="flex gap-2">
+                            <Button 
+                              onClick={() => handleRescheduleBooking(booking, calendarRescheduleDate, rescheduleTimeSlot)} 
+                              disabled={!calendarRescheduleDate || !rescheduleTimeSlot || modalLoading}
+                            >
+                              Confirm
+                            </Button>
+                            <Button variant="outline" onClick={() => { 
+                              setRescheduleMode(false); 
+                              setCalendarRescheduleDate(null); 
+                              setRescheduleTimeSlot(""); 
+                            }}>
+                              Cancel
+                            </Button>
+                          </div>
                         </div>
                       ) : (
                         <div className="flex gap-2 mt-2">
                           <Button variant="destructive" onClick={() => handleCancelBooking(booking)} disabled={modalLoading}>Cancel Booking</Button>
-                          <Button variant="outline" onClick={() => { setRescheduleMode(booking.id); setCalendarRescheduleDate(booking.date ? new Date(booking.date) : new Date()); }}>Reschedule</Button>
+                          <Button variant="outline" onClick={() => { 
+                            setRescheduleMode(booking.id); 
+                            setCalendarRescheduleDate(booking.date ? new Date(booking.date) : new Date()); 
+                            setRescheduleTimeSlot(booking.timeSlot || ""); 
+                          }}>Reschedule</Button>
                         </div>
                       )}
                     </div>

@@ -10,14 +10,16 @@ export async function POST(req: NextRequest) {
     const idToken = match[1];
     const decoded = await adminAuth.verifyIdToken(idToken);
     const uid = decoded.uid;
-    const { bookingId, newDate } = await req.json();
+    const { bookingId, newDate, newTimeSlot } = await req.json();
     if (!bookingId || !newDate) return NextResponse.json({ error: "Missing bookingId or newDate" }, { status: 400 });
     const db = getFirestore();
     const doc = await db.collection("bookings").doc(bookingId).get();
     if (!doc.exists || doc.data()?.uid !== uid) {
       return NextResponse.json({ error: "Booking not found or unauthorized" }, { status: 403 });
     }
-    await db.collection("bookings").doc(bookingId).update({ date: newDate });
+    const updateData: any = { date: newDate };
+    if (newTimeSlot) updateData.timeSlot = newTimeSlot;
+    await db.collection("bookings").doc(bookingId).update(updateData);
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

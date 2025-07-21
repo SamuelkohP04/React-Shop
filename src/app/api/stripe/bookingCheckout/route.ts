@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     const decoded = await adminAuth.verifyIdToken(idToken);
     const uid = decoded.uid;
     const body = await req.json();
-    const { service, date, remarks } = body;
+    const { service, date, timeSlot, remarks } = body;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
         uid,
         service,
         date,
+        timeSlot,
         remarks,
       },
     });

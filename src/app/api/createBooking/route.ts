@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
       uid: meta.uid,
       service: meta.service,
       date: meta.date,
+      timeSlot: meta.timeSlot || "",
       remarks: meta.remarks || "",
       createdAt: new Date(),
       stripeSessionId: session_id,
