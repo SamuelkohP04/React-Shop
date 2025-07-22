@@ -2,6 +2,8 @@
 "use client"
 
 import { useState } from "react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import {
@@ -28,7 +30,8 @@ function LoginCard() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // Remove error state, use toast instead
+
 
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -51,7 +54,6 @@ function LoginCard() {
 
   async function handleSubmit() {
     setLoading(true);
-    setError(null);
     try {
       if (isLogin) {
         // LOGIN FLOW
@@ -93,7 +95,11 @@ function LoginCard() {
         router.push("/dashboard");
       }
     } catch (err: any) {
-      setError(err.message);
+      toast({
+        title: "Authentication Error",
+        description: err.message,
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -118,7 +124,6 @@ function LoginCard() {
         </CardHeader>
   
         <CardContent className="flex flex-col gap-4">
-          {error && <div className="text-red-600">{error}</div>}
           <Input name="email" placeholder="Email" value={formData.email} onChange={handleChange} disabled={loading} />
           <Input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} disabled={loading} />
   
@@ -142,6 +147,48 @@ function LoginCard() {
         <CardFooter className="flex flex-col gap-4">
           <Button onClick={handleSubmit} disabled={loading}>
             {isLogin ? "Login" : "Register"}
+          </Button>
+          <Button
+            variant="outline"
+            className="flex items-center justify-center gap-2 bg-white border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold"
+            disabled={loading}
+            onClick={async () => {
+              setLoading(true);
+              try {
+                const provider = new GoogleAuthProvider();
+                const userCredential = await signInWithPopup(auth, provider);
+                const idToken = await userCredential.user.getIdToken();
+                // For new users, create profile
+                if (!isLogin) {
+                  await fetch("/api/createProfile", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify({
+                      fullname: userCredential.user.displayName,
+                      username: userCredential.user.email,
+                      dob: null,
+                      phone: userCredential.user.phoneNumber,
+                      email: userCredential.user.email,
+                    }),
+                  });
+                }
+                router.push("/dashboard");
+              } catch (err: any) {
+                toast({
+                  title: "Google Sign-In Error",
+                  description: err.message,
+                  variant: "destructive",
+                });
+              } finally {
+                setLoading(false);
+              }
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 48 48" className="mr-2"><g><path fill="#4285F4" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.3-5.7 7-11.3 7-6.6 0-12-5.4-12-12s5.4-12 12-12c2.9 0 5.4 1 7.4 2.6l6.2-6.2C34.1 5.5 29.4 3.5 24 3.5 12.8 3.5 3.5 12.8 3.5 24S12.8 44.5 24 44.5c11.1 0 20.5-9 20.5-20.5 0-1.4-.1-2.7-.4-4z"/><path fill="#34A853" d="M6.3 14.7l6.6 4.8C14.5 16.1 18.8 13 24 13c2.9 0 5.4 1 7.4 2.6l6.2-6.2C34.1 5.5 29.4 3.5 24 3.5c-7.2 0-13.4 3.7-17.1 9.2z"/><path fill="#FBBC05" d="M24 44.5c5.4 0 10.1-1.8 13.6-4.9l-6.3-5.2c-2.1 1.5-4.8 2.4-7.3 2.4-5.6 0-10.3-3.7-12-8.8l-6.6 5.1C6.1 40.3 14.3 44.5 24 44.5z"/><path fill="#EA4335" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.3-5.7 7-11.3 7-6.6 0-12-5.4-12-12s5.4-12 12-12c2.9 0 5.4 1 7.4 2.6l6.2-6.2C34.1 5.5 29.4 3.5 24 3.5 12.8 3.5 3.5 12.8 3.5 24S12.8 44.5 24 44.5c11.1 0 20.5-9 20.5-20.5 0-1.4-.1-2.7-.4-4z"/></g></svg>
+            Continue with Google
           </Button>
           <Button variant="link" onClick={() => setIsLogin(!isLogin)} disabled={loading}>
             {isLogin ? "Don't have an account?" : "Already have an account?"}

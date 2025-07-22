@@ -26,7 +26,13 @@ import {
   CheckCircle,
   Settings,
   Bell,
-  Lock
+  Lock,
+  ArrowLeft,
+  Gem,
+  Moon,
+  Sun,
+  Sparkles,
+  Eye
 } from "lucide-react";
 
 interface ProfileData {
@@ -49,6 +55,35 @@ export default function EnhancedProfile() {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('profile');
   const router = useRouter();
+
+  const handleUpgrade = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const user = auth.currentUser;
+      if (!user) throw new Error("Not authenticated");
+      const idToken = await user.getIdToken();
+
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({}),
+      });
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error || "Failed to start checkout");
+      }
+      const { url } = await res.json();
+      window.location.href = url;
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchProfile();
@@ -148,46 +183,105 @@ export default function EnhancedProfile() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="rounded-full h-16 w-16 border-4 border-purple-200 border-t-purple-600"
-        />
+      <div className="flex items-center justify-center min-h-screen" style={{
+        backgroundImage: 'url(/DashboardPage/seamless-moon-pattern.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'repeat'
+      }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/80 to-pink-900/80"></div>
+        <div className="relative">
+          <div className="animate-spin rounded-full h-20 w-20 border-4 border-purple-300 border-t-transparent shadow-lg shadow-purple-500/50"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Gem className="h-8 w-8 text-purple-300 animate-pulse" />
+          </div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-        >
-          <div className="text-red-600 text-lg mb-4 bg-red-50 p-4 rounded-lg border border-red-200">{error}</div>
-          <Button onClick={() => router.push("/dashboard")} className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-            Back to Dashboard
+      <div className="flex flex-col items-center justify-center min-h-screen" style={{
+        backgroundImage: 'url(/DashboardPage/seamless-moon-pattern.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'repeat'
+      }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/80 to-pink-900/80"></div>
+        <div className="relative text-center p-8 bg-black/30 backdrop-blur-md rounded-2xl border border-purple-500/30 shadow-2xl">
+          <Eye className="h-16 w-16 text-red-400 mx-auto mb-4 animate-pulse" />
+          <div className="text-red-400 text-lg mb-6">{error}</div>
+          <Button 
+            onClick={() => router.push("/dashboard")}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Return to Portal
           </Button>
-        </motion.div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
+    <div className="min-h-screen p-4 relative overflow-hidden" style={{
+      backgroundImage: 'url(/DashboardPage/seamless-moon-pattern.jpeg)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'repeat'
+    }}>
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/80 to-pink-900/80"></div>
+      
+      {/* Mystical Background Elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-10 animate-pulse">
+          <Star className="h-6 w-6 text-yellow-300" />
+        </div>
+        <div className="absolute top-40 right-20 animate-bounce">
+          <Moon className="h-8 w-8 text-blue-300" />
+        </div>
+        <div className="absolute bottom-32 left-1/4 animate-pulse">
+          <Sparkles className="h-5 w-5 text-purple-300" />
+        </div>
+      </div>
+      
+      <div className="max-w-4xl mx-auto relative z-10">
+        {/* Mystical Header with Back Button */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
+          className="flex items-center justify-between mb-8 p-6 bg-black/20 backdrop-blur-md rounded-2xl border border-purple-500/30 shadow-2xl"
         >
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-            Profile Settings
-          </h1>
-          <p className="text-gray-600">Manage your account and preferences</p>
+          <div className="flex items-center space-x-4">
+            <Button 
+              onClick={() => router.push("/dashboard")}
+              variant="outline"
+              className="border-purple-500/50 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 transition-all duration-300"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Portal
+            </Button>
+            <div className="flex items-center space-x-3">
+              <Gem className="h-10 w-10 text-purple-300 animate-pulse" />
+              <div>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
+                  Spiritual Profile
+                </h1>
+                <p className="text-purple-200/70 text-sm">Manage your cosmic identity and sacred preferences</p>
+              </div>
+            </div>
+          </div>
+          {profile?.paymentPlan !== "premium" && (
+            <Button 
+              onClick={handleUpgrade} 
+              className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white shadow-lg hover:shadow-yellow-500/25 transition-all duration-300"
+            >
+              <Crown className="h-4 w-4 mr-2" />
+              Ascend to Enlightenment
+            </Button>
+          )}
         </motion.div>
 
         {/* Success Message */}
