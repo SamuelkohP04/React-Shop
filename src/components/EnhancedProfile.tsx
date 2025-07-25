@@ -10,15 +10,15 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  Calendar, 
-  Crown, 
-  Edit3, 
-  Save, 
-  X, 
+import {
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  Crown,
+  Edit3,
+  Save,
+  X,
   Camera,
   Shield,
   Star,
@@ -32,7 +32,7 @@ import {
   Moon,
   Sun,
   Sparkles,
-  Eye
+  Eye,
 } from "lucide-react";
 
 interface ProfileData {
@@ -53,7 +53,7 @@ export default function EnhancedProfile() {
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState<any>({});
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState('profile');
+  const [activeTab, setActiveTab] = useState("profile");
   const router = useRouter();
 
   const handleUpgrade = async () => {
@@ -108,7 +108,10 @@ export default function EnhancedProfile() {
       setEditData({
         fullname: data.fullname || "",
         username: data.username || "",
-        dob: data.dob && data.dob._seconds ? format(new Date(data.dob._seconds * 1000), "yyyy-MM-dd") : "",
+        dob:
+          data.dob && data.dob._seconds
+            ? format(new Date(data.dob._seconds * 1000), "yyyy-MM-dd")
+            : "",
         phone: data.phone || "",
       });
     } catch (err: any) {
@@ -168,27 +171,51 @@ export default function EnhancedProfile() {
 
   const getPlanBadge = (plan: string) => {
     switch (plan?.toLowerCase()) {
-      case 'premium':
-        return <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white"><Crown className="w-3 h-3 mr-1" />Premium</Badge>;
-      case 'pro':
-        return <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white"><Star className="w-3 h-3 mr-1" />Pro</Badge>;
+      case "premium":
+        return (
+          <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
+            <Crown className="w-3 h-3 mr-1" />
+            Premium
+          </Badge>
+        );
+      case "pro":
+        return (
+          <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+            <Star className="w-3 h-3 mr-1" />
+            Pro
+          </Badge>
+        );
       default:
-        return <Badge variant="secondary"><Shield className="w-3 h-3 mr-1" />Free</Badge>;
+        return (
+          <Badge variant="secondary">
+            <Shield className="w-3 h-3 mr-1" />
+            Free
+          </Badge>
+        );
     }
   };
 
   const getInitials = (name: string) => {
-    return name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U';
+    return (
+      name
+        ?.split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase() || "U"
+    );
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen" style={{
-        backgroundImage: 'url(/DashboardPage/seamless-moon-pattern.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'repeat'
-      }}>
+      <div
+        className="flex items-center justify-center min-h-screen"
+        style={{
+          backgroundImage: "url(/DashboardPage/seamless-starry-pattern.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "repeat",
+        }}
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/80 to-pink-900/80"></div>
         <div className="relative">
           <div className="animate-spin rounded-full h-20 w-20 border-4 border-purple-300 border-t-transparent shadow-lg shadow-purple-500/50"></div>
@@ -202,17 +229,20 @@ export default function EnhancedProfile() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen" style={{
-        backgroundImage: 'url(/DashboardPage/seamless-moon-pattern.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'repeat'
-      }}>
+      <div
+        className="flex flex-col items-center justify-center min-h-screen"
+        style={{
+          backgroundImage: "url(/DashboardPage/seamless-starry-pattern.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "repeat",
+        }}
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/80 to-pink-900/80"></div>
         <div className="relative text-center p-8 bg-black/30 backdrop-blur-md rounded-2xl border border-purple-500/30 shadow-2xl">
           <Eye className="h-16 w-16 text-red-400 mx-auto mb-4 animate-pulse" />
           <div className="text-red-400 text-lg mb-6">{error}</div>
-          <Button 
+          <Button
             onClick={() => router.push("/dashboard")}
             className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
           >
@@ -225,15 +255,18 @@ export default function EnhancedProfile() {
   }
 
   return (
-    <div className="min-h-screen p-4 relative overflow-hidden" style={{
-      backgroundImage: 'url(/DashboardPage/seamless-moon-pattern.jpeg)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'repeat'
-    }}>
+    <div
+      className="min-h-screen p-4 relative overflow-hidden"
+      style={{
+        backgroundImage: "url(/DashboardPage/seamless-starry-pattern.jpeg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "repeat",
+      }}
+    >
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/80 to-pink-900/80"></div>
-      
+
       {/* Mystical Background Elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 animate-pulse">
@@ -246,7 +279,7 @@ export default function EnhancedProfile() {
           <Sparkles className="h-5 w-5 text-purple-300" />
         </div>
       </div>
-      
+
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Mystical Header with Back Button */}
         <motion.div
@@ -255,7 +288,7 @@ export default function EnhancedProfile() {
           className="flex items-center justify-between mb-8 p-6 bg-black/20 backdrop-blur-md rounded-2xl border border-purple-500/30 shadow-2xl"
         >
           <div className="flex items-center space-x-4">
-            <Button 
+            <Button
               onClick={() => router.push("/dashboard")}
               variant="outline"
               className="border-purple-500/50 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 transition-all duration-300"
@@ -269,13 +302,15 @@ export default function EnhancedProfile() {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
                   Spiritual Profile
                 </h1>
-                <p className="text-purple-200/70 text-sm">Manage your cosmic identity and sacred preferences</p>
+                <p className="text-purple-200/70 text-sm">
+                  Manage your cosmic identity and sacred preferences
+                </p>
               </div>
             </div>
           </div>
           {profile?.paymentPlan !== "premium" && (
-            <Button 
-              onClick={handleUpgrade} 
+            <Button
+              onClick={handleUpgrade}
               className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white shadow-lg hover:shadow-yellow-500/25 transition-all duration-300"
             >
               <Crown className="h-4 w-4 mr-2" />
@@ -310,7 +345,9 @@ export default function EnhancedProfile() {
                     <Avatar className="w-20 h-20 mx-auto mb-4 ring-4 ring-purple-100">
                       <AvatarImage src={profile?.profileImage} />
                       <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl">
-                        {getInitials(profile?.fullname || profile?.username || 'User')}
+                        {getInitials(
+                          profile?.fullname || profile?.username || "User"
+                        )}
                       </AvatarFallback>
                     </Avatar>
                     <Button
@@ -321,25 +358,27 @@ export default function EnhancedProfile() {
                       <Camera className="w-4 h-4 text-purple-600" />
                     </Button>
                   </div>
-                  <h3 className="font-semibold text-lg">{profile?.fullname || profile?.username}</h3>
+                  <h3 className="font-semibold text-lg">
+                    {profile?.fullname || profile?.username}
+                  </h3>
                   <p className="text-gray-600 text-sm mb-2">{profile?.email}</p>
-                  {getPlanBadge(profile?.paymentPlan || 'free')}
+                  {getPlanBadge(profile?.paymentPlan || "free")}
                 </div>
-                
+
                 <nav className="space-y-2">
                   {[
-                    { id: 'profile', label: 'Profile Info', icon: User },
-                    { id: 'security', label: 'Security', icon: Lock },
-                    { id: 'notifications', label: 'Notifications', icon: Bell },
-                    { id: 'preferences', label: 'Preferences', icon: Settings }
+                    { id: "profile", label: "Profile Info", icon: User },
+                    { id: "security", label: "Security", icon: Lock },
+                    { id: "notifications", label: "Notifications", icon: Bell },
+                    { id: "preferences", label: "Preferences", icon: Settings },
                   ].map((tab) => (
                     <Button
                       key={tab.id}
                       variant={activeTab === tab.id ? "default" : "ghost"}
                       className={`w-full justify-start ${
-                        activeTab === tab.id 
-                          ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
-                          : 'hover:bg-purple-50'
+                        activeTab === tab.id
+                          ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                          : "hover:bg-purple-50"
                       }`}
                       onClick={() => setActiveTab(tab.id)}
                     >
@@ -358,7 +397,7 @@ export default function EnhancedProfile() {
             animate={{ opacity: 1, x: 0 }}
             className="lg:col-span-3"
           >
-            {activeTab === 'profile' && (
+            {activeTab === "profile" && (
               <Card className="shadow-lg">
                 <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
@@ -374,7 +413,13 @@ export default function EnhancedProfile() {
                         setEditData({
                           fullname: profile?.fullname || "",
                           username: profile?.username || "",
-                          dob: profile?.dob && profile.dob._seconds ? format(new Date(profile.dob._seconds * 1000), "yyyy-MM-dd") : "",
+                          dob:
+                            profile?.dob && profile.dob._seconds
+                              ? format(
+                                  new Date(profile.dob._seconds * 1000),
+                                  "yyyy-MM-dd"
+                                )
+                              : "",
                           phone: profile?.phone || "",
                         });
                       } else {
@@ -382,8 +427,12 @@ export default function EnhancedProfile() {
                       }
                     }}
                   >
-                    {editMode ? <X className="w-4 h-4 mr-1" /> : <Edit3 className="w-4 h-4 mr-1" />}
-                    {editMode ? 'Cancel' : 'Edit'}
+                    {editMode ? (
+                      <X className="w-4 h-4 mr-1" />
+                    ) : (
+                      <Edit3 className="w-4 h-4 mr-1" />
+                    )}
+                    {editMode ? "Cancel" : "Edit"}
                   </Button>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -401,7 +450,9 @@ export default function EnhancedProfile() {
                           className="transition-all duration-200 focus:ring-2 focus:ring-purple-500"
                         />
                       ) : (
-                        <div className="p-3 bg-gray-50 rounded-lg border">{profile?.fullname || '-'}</div>
+                        <div className="p-3 bg-gray-50 rounded-lg border">
+                          {profile?.fullname || "-"}
+                        </div>
                       )}
                     </div>
 
@@ -418,7 +469,9 @@ export default function EnhancedProfile() {
                           className="transition-all duration-200 focus:ring-2 focus:ring-purple-500"
                         />
                       ) : (
-                        <div className="p-3 bg-gray-50 rounded-lg border">{profile?.username || '-'}</div>
+                        <div className="p-3 bg-gray-50 rounded-lg border">
+                          {profile?.username || "-"}
+                        </div>
                       )}
                     </div>
 
@@ -429,7 +482,9 @@ export default function EnhancedProfile() {
                       </label>
                       <div className="p-3 bg-gray-50 rounded-lg border flex items-center justify-between">
                         <span>{profile?.email}</span>
-                        <Badge variant="secondary" className="text-xs">Verified</Badge>
+                        <Badge variant="secondary" className="text-xs">
+                          Verified
+                        </Badge>
                       </div>
                     </div>
 
@@ -446,7 +501,9 @@ export default function EnhancedProfile() {
                           className="transition-all duration-200 focus:ring-2 focus:ring-purple-500"
                         />
                       ) : (
-                        <div className="p-3 bg-gray-50 rounded-lg border">{profile?.phone || '-'}</div>
+                        <div className="p-3 bg-gray-50 rounded-lg border">
+                          {profile?.phone || "-"}
+                        </div>
                       )}
                     </div>
 
@@ -464,7 +521,9 @@ export default function EnhancedProfile() {
                           className="transition-all duration-200 focus:ring-2 focus:ring-purple-500"
                         />
                       ) : (
-                        <div className="p-3 bg-gray-50 rounded-lg border">{formatDate(profile?.dob)}</div>
+                        <div className="p-3 bg-gray-50 rounded-lg border">
+                          {formatDate(profile?.dob)}
+                        </div>
                       )}
                     </div>
 
@@ -473,7 +532,9 @@ export default function EnhancedProfile() {
                         <Clock className="w-4 h-4" />
                         Member Since
                       </label>
-                      <div className="p-3 bg-gray-50 rounded-lg border">{formatDate(profile?.createdAt)}</div>
+                      <div className="p-3 bg-gray-50 rounded-lg border">
+                        {formatDate(profile?.createdAt)}
+                      </div>
                     </div>
                   </div>
 
@@ -502,7 +563,7 @@ export default function EnhancedProfile() {
               </Card>
             )}
 
-            {activeTab === 'security' && (
+            {activeTab === "security" && (
               <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -512,17 +573,31 @@ export default function EnhancedProfile() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <h3 className="font-semibold text-blue-800 mb-2">Two-Factor Authentication</h3>
-                    <p className="text-blue-700 text-sm mb-3">Add an extra layer of security to your account</p>
-                    <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100">
+                    <h3 className="font-semibold text-blue-800 mb-2">
+                      Two-Factor Authentication
+                    </h3>
+                    <p className="text-blue-700 text-sm mb-3">
+                      Add an extra layer of security to your account
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-blue-300 text-blue-700 hover:bg-blue-100"
+                    >
                       Enable 2FA
                     </Button>
                   </div>
-                  
+
                   <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                    <h3 className="font-semibold text-yellow-800 mb-2">Password</h3>
-                    <p className="text-yellow-700 text-sm mb-3">Last changed 3 months ago</p>
-                    <Button variant="outline" className="border-yellow-300 text-yellow-700 hover:bg-yellow-100">
+                    <h3 className="font-semibold text-yellow-800 mb-2">
+                      Password
+                    </h3>
+                    <p className="text-yellow-700 text-sm mb-3">
+                      Last changed 3 months ago
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-yellow-300 text-yellow-700 hover:bg-yellow-100"
+                    >
                       Change Password
                     </Button>
                   </div>
@@ -530,7 +605,7 @@ export default function EnhancedProfile() {
               </Card>
             )}
 
-            {activeTab === 'notifications' && (
+            {activeTab === "notifications" && (
               <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -543,23 +618,31 @@ export default function EnhancedProfile() {
                     <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                       <div>
                         <h4 className="font-medium">Booking Confirmations</h4>
-                        <p className="text-sm text-gray-600">Get notified when bookings are confirmed</p>
+                        <p className="text-sm text-gray-600">
+                          Get notified when bookings are confirmed
+                        </p>
                       </div>
-                      <Button variant="outline" size="sm">Enable</Button>
+                      <Button variant="outline" size="sm">
+                        Enable
+                      </Button>
                     </div>
                     <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                       <div>
                         <h4 className="font-medium">Marketing Updates</h4>
-                        <p className="text-sm text-gray-600">Receive updates about new services and offers</p>
+                        <p className="text-sm text-gray-600">
+                          Receive updates about new services and offers
+                        </p>
                       </div>
-                      <Button variant="outline" size="sm">Disable</Button>
+                      <Button variant="outline" size="sm">
+                        Disable
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             )}
 
-            {activeTab === 'preferences' && (
+            {activeTab === "preferences" && (
               <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -572,14 +655,22 @@ export default function EnhancedProfile() {
                     <div className="p-4 bg-gray-50 rounded-lg">
                       <h4 className="font-medium mb-2">Theme Preference</h4>
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm">Light</Button>
-                        <Button variant="outline" size="sm">Dark</Button>
-                        <Button variant="outline" size="sm">Auto</Button>
+                        <Button variant="outline" size="sm">
+                          Light
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          Dark
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          Auto
+                        </Button>
                       </div>
                     </div>
                     <div className="p-4 bg-gray-50 rounded-lg">
                       <h4 className="font-medium mb-2">Language</h4>
-                      <Button variant="outline" size="sm">English (US)</Button>
+                      <Button variant="outline" size="sm">
+                        English (US)
+                      </Button>
                     </div>
                   </div>
                 </CardContent>

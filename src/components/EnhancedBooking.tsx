@@ -61,14 +61,13 @@ const SERVICES = [
   }
 ];
 
+// Strictly defined time slots - each session is 45 minutes
 const TIME_SLOTS = [
-  { time: "10:00", label: "10:00 AM", available: true },
-  { time: "11:00", label: "11:00 AM", available: true },
-  { time: "12:00", label: "12:00 PM", available: false },
-  { time: "12:45", label: "12:45 PM", available: true },
-  { time: "14:00", label: "2:00 PM", available: true },
-  { time: "15:00", label: "3:00 PM", available: true },
-  { time: "16:00", label: "4:00 PM", available: true }
+  { time: "10:00", label: "10:00 AM - 10:45 AM", available: true },
+  { time: "11:00", label: "11:00 AM - 11:45 AM", available: true },
+  { time: "14:00", label: "2:00 PM - 2:45 PM", available: true },
+  { time: "15:00", label: "3:00 PM - 3:45 PM", available: true },
+  { time: "16:00", label: "4:00 PM - 4:45 PM", available: true }
 ];
 
 export default function EnhancedBooking() {

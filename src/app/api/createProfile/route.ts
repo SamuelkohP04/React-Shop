@@ -21,9 +21,10 @@ export async function POST(req: NextRequest) {
       email,
       createdAt: new Date(),
       paymentPlan: "Basic",
+      isAdmin: false, // Default to false, can be manually changed in database
     });
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 401 });
   }
-} 
+}

@@ -57,18 +57,37 @@ function LoginCard() {
     try {
       if (isLogin) {
         // LOGIN FLOW
-        const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-        const idToken = await userCredential.user.getIdToken();
-        // Fetch user profile from server
-        const res = await fetch("/api/profile", {
-          method: "GET",
-          headers: { Authorization: `Bearer ${idToken}` },
-        });
-        if (!res.ok) {
-          const { error } = await res.json();
-          throw new Error(error || "Unknown error");
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+          const idToken = await userCredential.user.getIdToken();
+          // Fetch user profile from server
+          const res = await fetch("/api/profile", {
+            method: "GET",
+            headers: { Authorization: `Bearer ${idToken}` },
+          });
+          if (!res.ok) {
+            const { error } = await res.json();
+            throw new Error(error || "Unknown error");
+          }
+          const profile = await res.json();
+          // Redirect based on admin status
+          if (profile.isAdmin) {
+            router.push("/admin");
+          } else {
+            router.push("/dashboard");
+          }
+        } catch (authError: any) {
+          // Handle specific Firebase auth errors
+          if (authError.code === 'auth/user-not-found') {
+            throw new Error("No account found with this email. Please sign up first or try Google sign-in if you used that method.");
+          } else if (authError.code === 'auth/wrong-password') {
+            throw new Error("Incorrect password. If you signed up with Google, please use Google sign-in instead.");
+          } else if (authError.code === 'auth/invalid-credential') {
+            throw new Error("Invalid credentials. If you signed up with Google, please use Google sign-in instead.");
+          } else {
+            throw authError;
+          }
         }
-        router.push("/dashboard");
       } else {
         // REGISTER FLOW
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
@@ -158,28 +177,57 @@ function LoginCard() {
                 const provider = new GoogleAuthProvider();
                 const userCredential = await signInWithPopup(auth, provider);
                 const idToken = await userCredential.user.getIdToken();
-                // For new users, create profile
-                if (!isLogin) {
-                  await fetch("/api/createProfile", {
+                
+                // Always try to fetch profile first to check if user exists
+                const profileRes = await fetch("/api/profile", {
+                  method: "GET",
+                  headers: { Authorization: `Bearer ${idToken}` },
+                });
+                
+                if (!profileRes.ok) {
+                  // User doesn't exist in Firestore, create profile
+                  const createRes = await fetch("/api/createProfile", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
                       Authorization: `Bearer ${idToken}`,
                     },
                     body: JSON.stringify({
-                      fullname: userCredential.user.displayName,
+                      fullname: userCredential.user.displayName || userCredential.user.email?.split('@')[0] || "User",
                       username: userCredential.user.email,
                       dob: null,
                       phone: userCredential.user.phoneNumber,
                       email: userCredential.user.email,
                     }),
                   });
+                  if (!createRes.ok) {
+                    throw new Error("Failed to create user profile");
+                  }
+                  router.push("/dashboard");
+                } else {
+                  // User exists, check if admin and redirect accordingly
+                  const profile = await profileRes.json();
+                  if (profile.isAdmin) {
+                    router.push("/admin");
+                  } else {
+                    router.push("/dashboard");
+                  }
                 }
-                router.push("/dashboard");
               } catch (err: any) {
+                let errorMessage = err.message;
+                
+                // Handle specific Google sign-in errors
+                if (err.code === 'auth/account-exists-with-different-credential') {
+                  errorMessage = "An account already exists with this email using a different sign-in method. Please try signing in with email and password instead.";
+                } else if (err.code === 'auth/popup-closed-by-user') {
+                  errorMessage = "Sign-in was cancelled. Please try again.";
+                } else if (err.code === 'auth/popup-blocked') {
+                  errorMessage = "Pop-up was blocked by your browser. Please allow pop-ups and try again.";
+                }
+                
                 toast({
                   title: "Google Sign-In Error",
-                  description: err.message,
+                  description: errorMessage,
                   variant: "destructive",
                 });
               } finally {
